@@ -35,6 +35,12 @@ public class PlayerController : MonoBehaviour {
             count = count + 1;
             SetCountText();
         }
+        else if (other.gameObject.CompareTag("DontPickUp"))
+        {
+            other.gameObject.SetActive(false);
+            count--;
+            SetCountText();
+        }
     //Sets the counting and win text UI display in real time.
     }
     void SetCountText()

@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
     private int nextLevel;
     private bool inProgress;
 
-    private bool runThrough = false;
+    private bool runThrough = true;
 
 	void Awake ()
     {
@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour {
         pickUpCount = GameObject.FindGameObjectsWithTag("Pick Up").Length;
         if (pickUpCount == 0)
         {
-            TaskCompleted();
+            LevelCompleted();
         }
     }
 
@@ -68,11 +68,11 @@ public class GameManager : MonoBehaviour {
         Invoke("RestartGame", levelStartDelay);
     }
 
-    private void TaskCompleted()
+    private void LevelCompleted()
     {
+        level++;
         inProgress = false;
         UserInterfaceController.instance.SetAndShowLevelOverText("You collected all of the pieces!");
-        level++;
         Invoke("GoToLevel", levelStartDelay);
     }
 

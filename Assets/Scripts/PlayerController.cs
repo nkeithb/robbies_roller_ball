@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour {
     {
         countText.text = "Count: " + count.ToString();
     }
+<<<<<<< HEAD
 
     void CheckPickUpCount()
     {
@@ -70,4 +71,6 @@ public class PlayerController : MonoBehaviour {
 
     }
 
+=======
+>>>>>>> 29a05671c96afd0a7760676bb703529c15603ea3
 }

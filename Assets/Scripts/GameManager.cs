@@ -65,9 +65,9 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    void GameOver();
+    void GameOver()
     {
-        break;
+        
     }
 
     private void TaskCompleted()

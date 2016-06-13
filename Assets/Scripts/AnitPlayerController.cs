@@ -3,7 +3,7 @@ using System.Collections;
 
 public class AnitPlayerController : MonoBehaviour {
 
-    public float speed = 10;
+    public float speed;
 
     private Rigidbody rb;
     
@@ -14,8 +14,8 @@ public class AnitPlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Vertical");
-        float moveVertical = Input.GetAxis("Horizontal");
+        float moveHorizontal = Random.Range (-50,50);
+        float moveVertical = Random.Range(-50,50);
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
         rb.AddForce(movement * speed);
     }

@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody rb;
     private int count;
+    private int pickUpCount;
+
     //Sets base information for all Variables at the start of the run.
     void Start()
     {
@@ -47,14 +49,21 @@ public class PlayerController : MonoBehaviour {
                 winText.text = "YOU LOSE!!!";
                 break;
         }
-        SetCountText();            
+        SetCountText();
+        CheckPickUpCount();           
     }
 
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString ();
-        if (count >= 8)
+    }
+
+    void CheckPickUpCount()
+    {
+        pickUpCount = GameObject.FindGameObjectsWithTag("Pick Up").Length;
+        if (pickUpCount == 0)
         {
+            SetCountText();
             winText.text = "You Have Collected All the Pieces!";
         }
     }

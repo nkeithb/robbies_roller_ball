@@ -29,24 +29,23 @@ public class PlayerController : MonoBehaviour {
     //Checks for collision with "pick up" 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Pick Up"))
+        switch (other.tag)
         {
-            other.gameObject.SetActive(false);
-            count++;
-            SetCountText();
+            case "Pick Up":
+                other.gameObject.SetActive(false);
+                count++;
+                SetCountText();
+                break;
+            case "DontPickUp":
+                other.gameObject.SetActive(false);
+                count--;
+                SetCountText();
+                break;
+            case "AntiPlayer":
+                count--;
+                SetCountText();
+                break;
         }
-        else if (other.gameObject.CompareTag("DontPickUp"))
-        {
-            other.gameObject.SetActive(false);
-            count--;
-            SetCountText();
-        }
-        else if (other.gameObject.CompareTag("AntiPlayer"))
-        {
-            count--;
-            SetCountText();
-        }
-    //Sets the counting and win text UI display in real time.
     }
     void SetCountText()
     {

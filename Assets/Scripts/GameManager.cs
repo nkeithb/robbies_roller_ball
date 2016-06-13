@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -12,23 +13,25 @@ public class GameManager : MonoBehaviour {
     private Text levelOverText;
     private GameObject levelImage;
     private int level;
+    private int nextLevel;
+    private bool inProgress;
 
 	void Awake ()
     {
-        level = 1;
         CheckInstantiation();
         InitGame();
 	}
 
     private void OnLevelWasLoaded (int index)
     {
-        level++;
 
         InitGame();
     }
 
     void InitGame()
     {
+        level++;
+        inProgress = true;
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         levelOverText = GameObject.Find("LevelOverText").GetComponent<Text>();
@@ -45,7 +48,10 @@ public class GameManager : MonoBehaviour {
 	
 	void Update ()
     {
-        CheckPickUpCount();
+        if(inProgress)
+        {
+            CheckPickUpCount();
+        }
 	}
 
     private void CheckInstantiation()
@@ -74,8 +80,21 @@ public class GameManager : MonoBehaviour {
 
     private void TaskCompleted()
     {
+        inProgress = false;
         levelText.text = "";
         levelOverText.text = "You collected all of the pieces!";
         levelImage.SetActive(true);
+        nextLevel = level + 1;
+        Invoke("GoToNextLevel", levelStartDelay);
+    }
+
+    private void GoToNextLevel()
+    {
+        SceneManager.LoadScene("MiniGameLvl" + nextLevel);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("MiniGame");
     }
 }

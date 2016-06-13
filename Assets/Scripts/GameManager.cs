@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
     private Text levelText;
     private Text levelOverText;
     private GameObject levelImage;
-    private int level;
+    private static int level = 1;
     private int nextLevel;
     private bool inProgress;
 
@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour {
 
     void InitGame()
     {
-        level = 1;
         inProgress = true;
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();

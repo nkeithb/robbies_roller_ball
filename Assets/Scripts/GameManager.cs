@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
     private int nextLevel;
     private bool inProgress;
 
-    private bool runThrough = false;
+    private bool runThrough = true;
 
 	void Awake ()
     {

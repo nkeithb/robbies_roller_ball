@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour {
         rb.AddForce(movement * speed);
     }
 
-    //Checks for collision with "pick up" 
+    //Checks for collision with game items. 
     void OnTriggerEnter(Collider other)
     {
         switch (other.tag)

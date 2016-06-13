@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody rb;
     private int count;
-    private int pickUpCount;
 
     //Sets base information for all Variables at the start of the run.
     void Start()
@@ -48,10 +47,10 @@ public class PlayerController : MonoBehaviour {
             case "DeathZone":
                 count = 0;
                 winText.text = "YOU LOSE!!!";
+                // gameManager.instance.GameOver();
                 break;
         }
-        SetCountText();
-        CheckPickUpCount();           
+        SetCountText();         
     }
 
     void SetCountText()
@@ -59,6 +58,7 @@ public class PlayerController : MonoBehaviour {
         countText.text = "Count: " + count.ToString ();
     }
 
+<<<<<<< HEAD
     void CheckPickUpCount()
     {
         pickUpCount = GameObject.FindGameObjectsWithTag("Pick Up").Length;
@@ -71,4 +71,7 @@ public class PlayerController : MonoBehaviour {
         
     }
 
+=======
+    
+>>>>>>> f3e23463fccc82da3c5b9e2ac1c9853838b82171
 }

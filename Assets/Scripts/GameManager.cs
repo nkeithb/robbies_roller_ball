@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour {
 	void Awake ()
     {
         CheckInstantiation();
-        InitGame();
+        //InitGame();
 	}
 
     private void OnLevelWasLoaded (int index)
@@ -51,7 +51,10 @@ public class GameManager : MonoBehaviour {
         {
             CheckPickUpCount();
         }
-	}
+        if (Input.GetKeyDown(KeyCode.Return) && !inProgress)
+            InitGame();
+
+    }
 
     private void CheckInstantiation()
     {

@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour {
     public float speed;
     public Text countText;
     public Text winText;
+    public GameObject Button;
 
     private Rigidbody rb;
     private int count;
@@ -27,7 +28,7 @@ public class PlayerController : MonoBehaviour {
         rb.AddForce(movement * speed);
     }
 
-    //Checks for collision with "pick up" 
+    //Checks for collision with game items. 
     void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
@@ -57,5 +58,20 @@ public class PlayerController : MonoBehaviour {
         countText.text = "Count: " + count.ToString ();
     }
 
+<<<<<<< HEAD
+    void CheckPickUpCount()
+    {
+        pickUpCount = GameObject.FindGameObjectsWithTag("Pick Up").Length;
+        if (pickUpCount == 0)
+        {
+            SetCountText();
+            winText.text = "You Have Collected All the Pieces!";
+            Button.gameObject.SetActive(true);
+        }
+        
+    }
+
+=======
     
+>>>>>>> f3e23463fccc82da3c5b9e2ac1c9853838b82171
 }

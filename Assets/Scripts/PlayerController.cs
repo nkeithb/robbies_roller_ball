@@ -45,7 +45,13 @@ public class PlayerController : MonoBehaviour {
                 count--;
                 SetCountText();
                 break;
+            case "DeathZone":
+                count = 0;
+                SetCountText();
+                winText.text = "YOU LOSE!!!";
+                break;
         }
+            
     }
     void SetCountText()
     {

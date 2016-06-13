@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     public Text winText;
     public GameObject Button;
     public AudioClip packUp;
+    public AudioClip deathSound;
 
     private Rigidbody rb;
     private static int count;
@@ -37,7 +38,7 @@ public class PlayerController : MonoBehaviour {
         {
             case "Pick Up":
                 other.gameObject.SetActive(false);
-                SoundManager.instance.RandomizeSfx(packUp);
+                SoundManager.instance.PlaySingle(packUp);
                 count++;
                 break;
             case "DontPickUp":
@@ -48,6 +49,7 @@ public class PlayerController : MonoBehaviour {
                 count--;
                 break;
             case "DeathZone":
+                SoundManager.instance.PlaySingle(deathSound);
                 count = 0;
                 winText.text = "YOU LOSE!!!";
                 GameManager.instance.GameOver();

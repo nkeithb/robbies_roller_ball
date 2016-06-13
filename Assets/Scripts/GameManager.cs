@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
     private int nextLevel;
     private bool inProgress;
 
-    private bool runThrough = true;
+    private bool runThrough = false;
 
 	void Awake ()
     {

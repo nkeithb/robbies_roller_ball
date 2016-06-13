@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour {
         winText.text = "";
     }
     // Checks for input from keyboard to determine Horizontal and Vertical movement of "Player"
+
     void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
@@ -28,8 +29,8 @@ public class PlayerController : MonoBehaviour {
         rb.AddForce(movement * speed);
     }
 
-    //Checks for collision with game items. 
-    void OnTriggerEnter(Collider other)
+        //Checks for collision with game items. 
+        void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
         {

@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour {
             case "DeathZone":
                 count = 0;
                 winText.text = "YOU LOSE!!!";
+                // gameManager.instance.GameOver();
                 break;
         }
         SetCountText();         

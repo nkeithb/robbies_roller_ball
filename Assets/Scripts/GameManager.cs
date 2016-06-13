@@ -65,6 +65,11 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    void GameOver();
+    {
+        break;
+    }
+
     private void TaskCompleted()
     {
         levelText.text = "";

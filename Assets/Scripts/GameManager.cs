@@ -65,9 +65,11 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    void GameOver()
+    public void GameOver()
     {
-        
+        levelText.text = "";
+        levelOverText.text = "Game Over Bitch Nigga!";
+        levelImage.SetActive(true);
     }
 
     private void TaskCompleted()

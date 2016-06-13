@@ -1,27 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
     public float levelStartDelay = 2f;
+    public static int level = 1;
 
     private int pickUpCount;
-    private Text levelText;
-    private Text levelOverText;
-    private GameObject levelImage;
-    private static int level = 1;
     private int nextLevel;
     private bool inProgress;
 
-    private bool runThrough = true;
+    private bool runThrough = false;
 
 	void Awake ()
     {
         CheckInstantiation();
-        if(!runThrough)
+        DontDestroyOnLoad(gameObject);
+        if (!runThrough)
         {
             InitGame();
         }
@@ -35,19 +32,9 @@ public class GameManager : MonoBehaviour {
     void InitGame()
     {
         inProgress = true;
-        levelImage = GameObject.Find("LevelImage");
-        levelText = GameObject.Find("LevelText").GetComponent<Text>();
-        levelOverText = GameObject.Find("LevelOverText").GetComponent<Text>();
-        levelText.text = "Level " + level;
-        levelOverText.text = "";
-        levelImage.SetActive(true);
-        Invoke("HideLevelImage", levelStartDelay);
+        UserInterfaceController.instance.SetAndShowLevelText(level);
+        UserInterfaceController.instance.HideLevelImageDelay(levelStartDelay);
     }
-
-    private void HideLevelImage()
-    {
-        levelImage.SetActive(false);
-    }	
 	
 	void Update ()
     {
@@ -77,18 +64,14 @@ public class GameManager : MonoBehaviour {
 
     public void GameOver()
     {
-        levelText.text = "";
-        levelOverText.text = "Game Over Bitch Nigga!";
-        levelImage.SetActive(true);
+        UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
         Invoke("RestartGame", levelStartDelay);
     }
 
     private void TaskCompleted()
     {
         inProgress = false;
-        levelText.text = "";
-        levelOverText.text = "You collected all of the pieces!";
-        levelImage.SetActive(true);
+        UserInterfaceController.instance.SetAndShowLevelOverText("You collected all of the pieces!");
         level++;
         Invoke("GoToLevel", levelStartDelay);
     }

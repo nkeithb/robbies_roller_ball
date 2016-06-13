@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject Button;
 
     private Rigidbody rb;
-    private int count;
+    private static int count;
 
     //Sets base information for all Variables at the start of the run.
     void Start()

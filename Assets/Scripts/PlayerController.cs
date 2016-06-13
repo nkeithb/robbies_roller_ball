@@ -32,12 +32,17 @@ public class PlayerController : MonoBehaviour {
         if (other.gameObject.CompareTag("Pick Up"))
         {
             other.gameObject.SetActive(false);
-            count = count + 1;
+            count++;
             SetCountText();
         }
         else if (other.gameObject.CompareTag("DontPickUp"))
         {
             other.gameObject.SetActive(false);
+            count--;
+            SetCountText();
+        }
+        else if (other.gameObject.CompareTag("AntiPlayer"))
+        {
             count--;
             SetCountText();
         }
@@ -48,7 +53,7 @@ public class PlayerController : MonoBehaviour {
         countText.text = "Count: " + count.ToString ();
         if (count >= 8)
         {
-            winText.text = "YOU WIN!";
+            winText.text = "You Have Collected All the Pieces!";
         }
     }
 }

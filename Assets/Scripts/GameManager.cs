@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour {
 
     void InitGame()
     {
-        level++;
         inProgress = true;
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
@@ -76,6 +75,7 @@ public class GameManager : MonoBehaviour {
         levelText.text = "";
         levelOverText.text = "Game Over Bitch Nigga!";
         levelImage.SetActive(true);
+        Invoke("Restart", levelStartDelay);
     }
 
     private void TaskCompleted()
@@ -84,17 +84,18 @@ public class GameManager : MonoBehaviour {
         levelText.text = "";
         levelOverText.text = "You collected all of the pieces!";
         levelImage.SetActive(true);
-        nextLevel = level + 1;
+        level++;
         Invoke("GoToNextLevel", levelStartDelay);
     }
 
     private void GoToNextLevel()
     {
-        SceneManager.LoadScene("MiniGameLvl" + nextLevel);
+        SceneManager.LoadScene("MiniGameLvl" + level);
     }
 
     public void Restart()
     {
+        level = 1;
         SceneManager.LoadScene("MiniGame");
     }
 }

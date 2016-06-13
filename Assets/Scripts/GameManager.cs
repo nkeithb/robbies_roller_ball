@@ -24,7 +24,6 @@ public class GameManager : MonoBehaviour {
 
     private void OnLevelWasLoaded (int index)
     {
-
         InitGame();
     }
 
@@ -51,9 +50,7 @@ public class GameManager : MonoBehaviour {
         {
             CheckPickUpCount();
         }
-        if (Input.GetKeyDown(KeyCode.Return) && !inProgress)
-            InitGame();
-
+        CheckPlayerInputs();
     }
 
     private void CheckInstantiation()
@@ -78,7 +75,7 @@ public class GameManager : MonoBehaviour {
         levelText.text = "";
         levelOverText.text = "Game Over Bitch Nigga!";
         levelImage.SetActive(true);
-        Invoke("Restart", levelStartDelay);
+        Invoke("RestartGame", levelStartDelay);
     }
 
     private void TaskCompleted()
@@ -88,17 +85,30 @@ public class GameManager : MonoBehaviour {
         levelOverText.text = "You collected all of the pieces!";
         levelImage.SetActive(true);
         level++;
-        Invoke("GoToNextLevel", levelStartDelay);
+        Invoke("GoToLevel", levelStartDelay);
     }
 
-    private void GoToNextLevel()
+    private void GoToLevel()
     {
         SceneManager.LoadScene("MiniGameLvl" + level);
     }
 
-    public void Restart()
+    public void RestartLevel()
+    {
+        GoToLevel();
+    }
+
+    public void RestartGame()
     {
         level = 1;
-        SceneManager.LoadScene("MiniGame");
+        GoToLevel();
+    }
+
+    private void CheckPlayerInputs()
+    {
+        //switch(Input.inputString)
+          //  case:
+        if (Input.GetKeyDown(KeyCode.Return) && !inProgress && level == 1)
+            InitGame();
     }
 }

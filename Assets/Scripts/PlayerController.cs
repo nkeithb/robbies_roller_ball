@@ -50,15 +50,14 @@ public class PlayerController : MonoBehaviour {
                 // gameManager.instance.GameOver();
                 break;
         }
-        SetCountText();         
+        SetCountText();
     }
 
     void SetCountText()
     {
-        countText.text = "Count: " + count.ToString ();
+        countText.text = "Count: " + count.ToString();
     }
 
-<<<<<<< HEAD
     void CheckPickUpCount()
     {
         pickUpCount = GameObject.FindGameObjectsWithTag("Pick Up").Length;
@@ -68,10 +67,7 @@ public class PlayerController : MonoBehaviour {
             winText.text = "You Have Collected All the Pieces!";
             Button.gameObject.SetActive(true);
         }
-        
+
     }
 
-=======
-    
->>>>>>> f3e23463fccc82da3c5b9e2ac1c9853838b82171
 }

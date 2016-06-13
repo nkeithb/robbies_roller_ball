@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
     public Text countText;
     public Text winText;
     public GameObject Button;
+    public AudioClip packUp;
 
     private Rigidbody rb;
     private static int count;
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour {
         {
             case "Pick Up":
                 other.gameObject.SetActive(false);
+                SoundManager.instance.RandomizeSfx(packUp);
                 count++;
                 break;
             case "DontPickUp":

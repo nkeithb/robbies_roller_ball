@@ -16,11 +16,16 @@ public class GameManager : MonoBehaviour {
     private int nextLevel;
     private bool inProgress;
 
+    private bool runThrough = false;
+
 	void Awake ()
     {
         CheckInstantiation();
-        //InitGame();
-	}
+        if(!runThrough)
+        {
+            InitGame();
+        }
+    }
 
     private void OnLevelWasLoaded (int index)
     {

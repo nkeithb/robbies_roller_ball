@@ -58,4 +58,5 @@ public class PlayerController : MonoBehaviour {
             winText.text = "You Have Collected All the Pieces!";
         }
     }
+
 }

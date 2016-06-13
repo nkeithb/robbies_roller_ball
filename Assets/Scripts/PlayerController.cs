@@ -57,21 +57,4 @@ public class PlayerController : MonoBehaviour {
     {
         countText.text = "Count: " + count.ToString ();
     }
-
-<<<<<<< HEAD
-    void CheckPickUpCount()
-    {
-        pickUpCount = GameObject.FindGameObjectsWithTag("Pick Up").Length;
-        if (pickUpCount == 0)
-        {
-            SetCountText();
-            winText.text = "You Have Collected All the Pieces!";
-            Button.gameObject.SetActive(true);
-        }
-        
-    }
-
-=======
-    
->>>>>>> f3e23463fccc82da3c5b9e2ac1c9853838b82171
 }

@@ -34,25 +34,22 @@ public class PlayerController : MonoBehaviour {
             case "Pick Up":
                 other.gameObject.SetActive(false);
                 count++;
-                SetCountText();
                 break;
             case "DontPickUp":
                 other.gameObject.SetActive(false);
                 count--;
-                SetCountText();
                 break;
             case "AntiPlayer":
                 count--;
-                SetCountText();
                 break;
             case "DeathZone":
                 count = 0;
-                SetCountText();
                 winText.text = "YOU LOSE!!!";
                 break;
         }
-            
+        SetCountText();            
     }
+
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString ();

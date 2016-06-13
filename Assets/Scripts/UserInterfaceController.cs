@@ -12,7 +12,7 @@ public class UserInterfaceController : MonoBehaviour {
 
     void Awake()
     {
-        instance = this;
+        CheckInstantiation();
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         levelOverText = GameObject.Find("LevelOverText").GetComponent<Text>();
@@ -40,5 +40,13 @@ public class UserInterfaceController : MonoBehaviour {
     public void HideLevelImageDelay(float timeDelay)
     {
         Invoke("HideLevelImage", timeDelay);
+    }
+
+    private void CheckInstantiation()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
     }
 }

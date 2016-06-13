@@ -46,7 +46,14 @@ public class PlayerController : MonoBehaviour {
             count--;
             SetCountText();
         }
-    //Sets the counting and win text UI display in real time.
+        else if (other.gameObject.CompareTag("DeathZone"))
+        {
+            count = 0;
+            SetCountText();
+            winText.text = "YOU LOSE!!!";
+        }
+
+        //Sets the counting and win text UI display in real time.
     }
     void SetCountText()
     {

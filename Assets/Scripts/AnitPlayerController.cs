@@ -3,24 +3,31 @@ using System.Collections;
 
 public class AnitPlayerController : MonoBehaviour {
 
-    public float speed;
-    
-    private Rigidbody rb;
-    private int Position;
-    private Rigidbody Player;
+    public Transform target;
+    public int moveSpeed = 6;
+    public int rotationSpeed = 3;
     
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        target = GameObject.Find("Player").transform;
     }
 
-   void FixedUpdate()
+   void Update()
     {
-        float moveHorizontal = Random.Range (-10,10);
-        float moveVertical = Random.Range(-10,10);
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        rb.AddForce(movement * speed);
+        if (target != null)
+        {
+            Vector3 dir = target.position - transform.position;
+            // Only needed if objects don't share 'z' value.
+            dir.z = 0.0f;
+            if (dir != Vector3.zero)
+                transform.rotation = Quaternion.Slerp(transform.rotation,
+                    Quaternion.FromToRotation(Vector3.right, dir),
+                    rotationSpeed * Time.deltaTime);
+
+            //Move Towards Target
+            transform.position += (target.position - transform.position).normalized
+                * moveSpeed * Time.deltaTime;
+        }
     }
-    
    
 }

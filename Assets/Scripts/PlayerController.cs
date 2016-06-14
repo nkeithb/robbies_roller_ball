@@ -5,7 +5,6 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
     public float speed;
     public Text countText;
-    public Text winText;
     public GameObject Button;
 
     public AudioClip pickUpSound;
@@ -17,15 +16,12 @@ public class PlayerController : MonoBehaviour {
     public AudioClip[] rampSounds;
 
     private Rigidbody rb;
-    private static int count;
+    private static int count = 0;
 
     //Sets base information for all Variables at the start of the run.
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        count = 0;
-        SetCountText();
-        winText.text = "";
     }
     // Checks for input from keyboard to determine Horizontal and Vertical movement of "Player"
 
@@ -68,7 +64,6 @@ public class PlayerController : MonoBehaviour {
             case "DeathZone":
                 SoundManager.instance.PlaySingle(deathSound);
                 count = 0;
-                winText.text = "YOU LOSE!!!";
                 GameManager.instance.GameOver();
                 break;
         }

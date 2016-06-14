@@ -6,13 +6,16 @@ public class AnitPlayerController : MonoBehaviour {
     public float speed;
     
     private Rigidbody rb;
+    private int Position;
+    private Rigidbody Player;
     
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        Position = 
     }
 
-    void FixedUpdate()
+   void FixedUpdate()
     {
         float moveHorizontal = Random.Range (-10,10);
         float moveVertical = Random.Range(-10,10);

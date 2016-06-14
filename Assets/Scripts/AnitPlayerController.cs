@@ -12,7 +12,6 @@ public class AnitPlayerController : MonoBehaviour {
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        Position = 
     }
 
    void FixedUpdate()

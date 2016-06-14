@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Space))
             rb.AddForce(new Vector3(0.0f, jumpForce, 0.0f));
+        else if (Input.GetKeyUp(KeyCode.Space))
+            rb.AddForce(new Vector3(0.0f, -jumpForce, 0.0f));
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);

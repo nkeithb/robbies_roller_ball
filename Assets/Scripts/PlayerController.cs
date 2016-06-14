@@ -8,8 +8,8 @@ public class PlayerController : MonoBehaviour {
     public Text countText;
     public GameObject Button;
 
-    public AudioClip pickUpSound;
-    public AudioClip deathSound;
+    public AudioClip[] pickUpSounds;
+    public AudioClip[] deathSounds;
     public AudioClip antiPlayerSound;
     public AudioClip dontPickUpSound;
     public AudioClip wallSound;
@@ -30,8 +30,8 @@ public class PlayerController : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Space))
             rb.AddForce(new Vector3(0.0f, jumpForce, 0.0f));
-        else if (Input.GetKeyUp(KeyCode.Space))
-            rb.AddForce(new Vector3(0.0f, -jumpForce, 0.0f));
+        //else if (Input.GetKeyUp(KeyCode.Space))
+            //rb.AddForce(new Vector3(0.0f, -jumpForce, 0.0f));
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour {
         {
             case "Pick Up":
                 other.gameObject.SetActive(false);
-                SoundManager.instance.PlaySingle(pickUpSound);
+                SoundManager.instance.RandomizeSfx(pickUpSounds);
                 count++;
                 break;
             case "DontPickUp":
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour {
                 SoundManager.instance.RandomizeSfx(rampSounds);
                 break;
             case "DeathZone":
-                SoundManager.instance.PlaySingle(deathSound);
+                SoundManager.instance.RandomizeSfx(deathSounds);
                 count = 0;
                 GameManager.instance.GameOver();
                 break;

@@ -4,7 +4,7 @@ using System.Collections;
 public class AnitPlayerController : MonoBehaviour {
 
     public float speed;
-
+    
     private Rigidbody rb;
     
     void Start()

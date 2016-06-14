@@ -1,49 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
     public float levelStartDelay = 2f;
+    public static int level = 1;
 
     private int pickUpCount;
-    private Text levelText;
-    private Text levelOverText;
-    private GameObject levelImage;
-    private static int level = 1;
     private int nextLevel;
     private bool inProgress;
+
+    private bool runThrough = true;
 
 	void Awake ()
     {
         CheckInstantiation();
-        InitGame();
-	}
+        DontDestroyOnLoad(gameObject);
+        if (!runThrough)
+        {
+            InitGame();
+        }
+    }
 
     private void OnLevelWasLoaded (int index)
     {
-
         InitGame();
     }
 
     void InitGame()
     {
         inProgress = true;
-        levelImage = GameObject.Find("LevelImage");
-        levelText = GameObject.Find("LevelText").GetComponent<Text>();
-        levelOverText = GameObject.Find("LevelOverText").GetComponent<Text>();
-        levelText.text = "Level " + level;
-        levelOverText.text = "";
-        levelImage.SetActive(true);
-        Invoke("HideLevelImage", levelStartDelay);
+        UserInterfaceController.instance.SetAndShowLevelText(level);
+        UserInterfaceController.instance.HideLevelImageDelay(levelStartDelay);
     }
-
-    private void HideLevelImage()
-    {
-        levelImage.SetActive(false);
-    }	
 	
 	void Update ()
     {
@@ -51,7 +42,8 @@ public class GameManager : MonoBehaviour {
         {
             CheckPickUpCount();
         }
-	}
+        CheckPlayerInputs();
+    }
 
     private void CheckInstantiation()
     {
@@ -72,30 +64,41 @@ public class GameManager : MonoBehaviour {
 
     public void GameOver()
     {
-        levelText.text = "";
-        levelOverText.text = "Game Over Bitch Nigga!";
-        levelImage.SetActive(true);
-        Invoke("Restart", levelStartDelay);
+        UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
+        Invoke("RestartGame", levelStartDelay);
     }
 
     private void TaskCompleted()
     {
         inProgress = false;
-        levelText.text = "";
-        levelOverText.text = "You collected all of the pieces!";
-        levelImage.SetActive(true);
+        UserInterfaceController.instance.SetAndShowLevelOverText("You collected all of the pieces!");
         level++;
-        Invoke("GoToNextLevel", levelStartDelay);
+        Invoke("GoToLevel", levelStartDelay);
     }
 
-    private void GoToNextLevel()
+    private void GoToLevel()
     {
         SceneManager.LoadScene("MiniGameLvl" + level);
     }
 
-    public void Restart()
+    public void RestartLevel()
+    {
+        GoToLevel();
+    }
+
+    public void RestartGame()
     {
         level = 1;
-        SceneManager.LoadScene("MiniGame");
+        GoToLevel();
+    }
+
+    private void CheckPlayerInputs()
+    {
+        //switch(Input.inputString)
+          //  case:
+        if (Input.GetKeyDown(KeyCode.Return) && !inProgress && level == 1)
+            InitGame();
+        if (Input.GetKeyDown(KeyCode.R) && inProgress)
+            TaskCompleted();
     }
 }

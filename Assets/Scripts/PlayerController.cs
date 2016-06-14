@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
     public AudioClip antiPlayerSound;
     public AudioClip dontPickUpSound;
     public AudioClip wallSound;
+    public AudioClip obstacleSound;
 
     private Rigidbody rb;
     private static int count;
@@ -56,6 +57,9 @@ public class PlayerController : MonoBehaviour {
                 break;
             case "Wall":
                 SoundManager.instance.PlaySingle(wallSound);
+                break;
+            case "Obstacle":
+                SoundManager.instance.PlaySingle(obstacleSound);
                 break;
             case "DeathZone":
                 SoundManager.instance.PlaySingle(deathSound);

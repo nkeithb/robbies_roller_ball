@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
     public float speed;
-    public float jumpForce = 250.0f;
+    public float jumpForce = 250.0f - 250.0f;
     public Text countText;
     public GameObject Button;
 

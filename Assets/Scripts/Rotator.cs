@@ -3,12 +3,10 @@ using System.Collections;
 
 public class Rotator : MonoBehaviour {
 
-    public float valueX = 90f;
-    public float valueY = 45f;
-    public float valueZ = 15f;
+    public Vector3 rotationSpeed = new Vector3 (90f, 45f, 15f);
 
-    void Update () {
-
-        transform.Rotate (new Vector3 (valueX,valueY,valueZ) * Time.deltaTime);
-	}
+    void Update ()
+    {
+        transform.Rotate(rotationSpeed * Time.deltaTime);
+    }
 }

@@ -7,8 +7,11 @@ public class PlayerController : MonoBehaviour {
     public Text countText;
     public Text winText;
     public GameObject Button;
-    public AudioClip packUp;
+
+    public AudioClip pickUpSound;
     public AudioClip deathSound;
+    public AudioClip antiPlayerSound;
+    public AudioClip dontPickUpSound;
 
     private Rigidbody rb;
     private static int count;
@@ -38,14 +41,16 @@ public class PlayerController : MonoBehaviour {
         {
             case "Pick Up":
                 other.gameObject.SetActive(false);
-                SoundManager.instance.PlaySingle(packUp);
+                SoundManager.instance.PlaySingle(pickUpSound);
                 count++;
                 break;
             case "DontPickUp":
                 other.gameObject.SetActive(false);
+                SoundManager.instance.PlaySingle(dontPickUpSound);
                 count--;
                 break;
             case "AntiPlayer":
+                SoundManager.instance.PlaySingle(antiPlayerSound);
                 count--;
                 break;
             case "DeathZone":

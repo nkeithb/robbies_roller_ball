@@ -18,12 +18,15 @@ public class PlayerController : MonoBehaviour {
     public AudioClip[] jumpSounds;
 
     private Rigidbody rb;
+    bool script;
     private static int count = 0;
 
     //Sets base information for all Variables at the start of the run.
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        
     }
     // Checks for input from keyboard to determine Horizontal and Vertical movement of "Player"
 

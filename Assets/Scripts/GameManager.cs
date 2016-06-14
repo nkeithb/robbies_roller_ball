@@ -35,13 +35,21 @@ public class GameManager : MonoBehaviour {
         UserInterfaceController.instance.SetAndShowLevelText(level);
         UserInterfaceController.instance.HideLevelImageDelay(levelStartDelay);
     }
-	
-	void Update ()
+
+    void Update()
     {
-        if(inProgress)
+        if (inProgress)
         {
             CheckPickUpCount();
+            // enable player/AP scripts
+            
+            
         }
+        else if (!inProgress)
+        { 
+            //disable player/AP scripts
+        }
+
         CheckPlayerInputs();
     }
 
@@ -64,8 +72,10 @@ public class GameManager : MonoBehaviour {
 
     public void GameOver()
     {
+        inProgress = false;
         UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
         Invoke("RestartGame", levelStartDelay);
+        inProgress = true;
     }
 
     private void TaskCompleted()
@@ -74,6 +84,7 @@ public class GameManager : MonoBehaviour {
         UserInterfaceController.instance.SetAndShowLevelOverText("You collected all of the pieces!");
         level++;
         Invoke("GoToLevel", levelStartDelay);
+        inProgress = true;
     }
 
     private void GoToLevel()

@@ -6,7 +6,7 @@ using System.Collections;
 		public AudioSource efxSource;					
 		public AudioSource musicSource;					
 		public static SoundManager instance = null;						
-		public float lowPitchRange = 1f;				
+		public float lowPitchRange = .75f;				
 		public float highPitchRange = 1.05f;			
 		
 		

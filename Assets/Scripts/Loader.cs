@@ -17,8 +17,4 @@ public class Loader : MonoBehaviour {
             Instantiate(soundManager);
     }
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 }

@@ -4,8 +4,8 @@ using System.Collections;
 public class AnitPlayerController : MonoBehaviour {
 
     public Transform target;
-    public int moveSpeed = 6;
-    public int rotationSpeed = 3;
+    public float moveSpeed = 6f;
+    public float rotationSpeed = 3f;
     
     void Start()
     {

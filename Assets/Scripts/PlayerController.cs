@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour {
     public AudioClip wallSound;
     public AudioClip obstacleSound;
     public AudioClip[] rampSounds;
+    public AudioClip[] jumpSounds;
 
     private Rigidbody rb;
     private static int count = 0;
@@ -29,9 +30,12 @@ public class PlayerController : MonoBehaviour {
     void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Space))
+        {
             rb.AddForce(new Vector3(0.0f, jumpForce, 0.0f));
+            SoundManager.instance.RandomizeSfx(jumpSounds);
+        }
         //else if (Input.GetKeyUp(KeyCode.Space))
-            //rb.AddForce(new Vector3(0.0f, -jumpForce, 0.0f));
+        //rb.AddForce(new Vector3(0.0f, -jumpForce, 0.0f));
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);

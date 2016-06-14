@@ -4,6 +4,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
     public float speed;
+    public float jumpForce = 250.0f;
     public Text countText;
     public GameObject Button;
 
@@ -27,6 +28,8 @@ public class PlayerController : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+            rb.AddForce(new Vector3(0.0f, jumpForce, 0.0f));
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);

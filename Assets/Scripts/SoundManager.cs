@@ -23,7 +23,8 @@ using System.Collections;
 		
 		public void PlaySingle(AudioClip clip)
 		{
-			efxSource.clip = clip;			
+            efxSource.pitch = Random.Range(lowPitchRange, highPitchRange);
+            efxSource.clip = clip;			
 			efxSource.Play ();
 		}
 		

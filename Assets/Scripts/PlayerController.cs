@@ -14,9 +14,7 @@ public class PlayerController : MonoBehaviour {
     public AudioClip dontPickUpSound;
     public AudioClip wallSound;
     public AudioClip obstacleSound;
-    public AudioClip rampSound1;
-    public AudioClip rampSound2;
-    public AudioClip rampSound3;
+    public AudioClip[] rampSounds;
 
     private Rigidbody rb;
     private static int count;
@@ -65,7 +63,7 @@ public class PlayerController : MonoBehaviour {
                 SoundManager.instance.PlaySingle(obstacleSound);
                 break;
             case "Ramp":
-                SoundManager.instance.RandomizeSfx([rampSound1, rampSound2, rampSound3]);
+                SoundManager.instance.RandomizeSfx(rampSounds);
                 break;
             case "DeathZone":
                 SoundManager.instance.PlaySingle(deathSound);

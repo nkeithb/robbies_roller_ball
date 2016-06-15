@@ -115,20 +115,26 @@ public class GameManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.R) && inProgress)
             TaskCompleted();
         if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!paused)
-            {
-                Time.timeScale = 0.0f;
-                paused = true;
-            }
-            else if (paused)
-            {
-                Time.timeScale = 1.0f;
-                paused = false;
-            }
-            //Display UI canvas
-            //Change text to "Paused"
+            AttemptPauseGame();
+    }
 
+    private void AttemptPauseGame()
+    {
+        if(!paused)
+        {
+            PauseGame();
         }
+        UnPauseGame();
+    }
+    private void PauseGame()
+    {
+        Time.timeScale = 0.0f;
+        paused = true;    
+    }
+
+    private void UnPauseGame()
+    {
+        Time.timeScale = 1.0f;
+        paused = false;
     }
 }

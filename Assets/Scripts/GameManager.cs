@@ -11,39 +11,52 @@ public class GameManager : MonoBehaviour {
     private int pickUpCount;
     private int nextLevel;
     private bool inProgress;
-
-    private bool runThrough = true;
+    private bool paused = false;
 
 	void Awake ()
     {
         CheckInstantiation();
+        FreezeGame();
         DontDestroyOnLoad(gameObject);
-        if (!runThrough)
-        {
-            InitGame();
-        }
-    }
-
-    private void OnLevelWasLoaded (int index)
-    {
-        InitGame();
     }
 
     void InitGame()
     {
-        inProgress = true;
+        
+        FreezeGame();
         UserInterfaceController.instance.SetAndShowLevelText(level);
-        UserInterfaceController.instance.HideLevelImageDelay(levelStartDelay);
+        Invoke("UnPauseGame", levelStartDelay);
     }
-	
-	void Update ()
+
+    void Update()
     {
-        if(inProgress)
+        if (inProgress)
         {
-            CheckPickUpCount();
+            CheckPickUpCount();              
         }
         CheckPlayerInputs();
     }
+
+    public void GameOver()
+    {
+        PauseGame();
+        UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
+        Invoke("RestartGame", levelStartDelay);
+    }    
+
+    public void RestartLevel()
+    {
+        GoToLevel();
+    }
+
+    public void RestartGame()
+    {
+        PauseGame();
+        level = 1;
+        GoToLevel();
+    }
+
+    //Private Functions
 
     private void CheckInstantiation()
     {
@@ -53,19 +66,13 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
     }
 
-    void CheckPickUpCount()
+    private void CheckPickUpCount()
     {
         pickUpCount = GameObject.FindGameObjectsWithTag("Pick Up").Length;
         if (pickUpCount == 0)
         {
             TaskCompleted();
         }
-    }
-
-    public void GameOver()
-    {
-        UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
-        Invoke("RestartGame", levelStartDelay);
     }
 
     private void TaskCompleted()
@@ -81,24 +88,46 @@ public class GameManager : MonoBehaviour {
         SceneManager.LoadScene("MiniGameLvl" + level);
     }
 
-    public void RestartLevel()
-    {
-        GoToLevel();
-    }
-
-    public void RestartGame()
-    {
-        level = 1;
-        GoToLevel();
-    }
-
     private void CheckPlayerInputs()
     {
-        //switch(Input.inputString)
-          //  case:
         if (Input.GetKeyDown(KeyCode.Return) && !inProgress && level == 1)
             InitGame();
         if (Input.GetKeyDown(KeyCode.R) && inProgress)
             TaskCompleted();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            AttemptPauseGame();
+    }
+
+    private void AttemptPauseGame()
+    {
+        if(!paused)
+        {
+            PauseGame();
+        }
+        UnPauseGame();
+    }
+
+    private void PauseGame()
+    {
+        FreezeGame();
+        paused = true;
+        UserInterfaceController.instance.SetAndShowLevelText(level);
+    }
+
+    private void UnPauseGame()
+    {
+        paused = false;
+        UserInterfaceController.instance.HideLevelImage();
+        UnFreezeGame();
+    }
+
+    private void FreezeGame()
+    {
+        Time.timeScale = 0.0f;
+    }
+
+    private void UnFreezeGame()
+    {
+        Time.timeScale = 1.0f;
     }
 }

@@ -18,35 +18,22 @@ public class PlayerController : MonoBehaviour {
     public AudioClip[] jumpSounds;
 
     private Rigidbody rb;
-    bool script;
     private static int count = 0;
+    private bool paused = false;
 
     //Sets base information for all Variables at the start of the run.
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-
-        
+        rb = GetComponent<Rigidbody>();        
     }
-    // Checks for input from keyboard to determine Horizontal and Vertical movement of "Player"
 
     void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            rb.AddForce(new Vector3(0.0f, jumpForce, 0.0f));
-            SoundManager.instance.RandomizeSfx(jumpSounds);
-        }
-        //else if (Input.GetKeyUp(KeyCode.Space))
-        //rb.AddForce(new Vector3(0.0f, -jumpForce, 0.0f));
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        rb.AddForce(movement * speed);
+        CheckPlayerInputs();
     }
 
-        //Checks for collision with game items. 
-        void OnTriggerEnter(Collider other)
+    //Checks for collision with game items. 
+    void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
         {
@@ -84,6 +71,26 @@ public class PlayerController : MonoBehaviour {
 
     void SetCountText()
     {
-        countText.text = "Count: " + count.ToString();
+        countText.text = "Score: " + count.ToString();
+    }
+
+    // Checks for input from keyboard to determine user actions
+    void CheckPlayerInputs()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(new Vector3(0.0f, jumpForce, 0.0f));
+            SoundManager.instance.RandomizeSfx(jumpSounds);
+        }
+
+
+        //else if (Input.GetKeyUp(KeyCode.Space))
+        //rb.AddForce(new Vector3(0.0f, -jumpForce, 0.0f));
+
+
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        rb.AddForce(movement* speed);
     }
 }

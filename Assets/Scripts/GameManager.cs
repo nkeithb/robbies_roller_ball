@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     private int pickUpCount;
     private int nextLevel;
     private bool inProgress;
-
+    private bool paused = false;
     private bool runThrough = true;
 
 	void Awake ()
@@ -40,14 +40,17 @@ public class GameManager : MonoBehaviour {
     {
         if (inProgress)
         {
+            Time.timeScale = 1.0f;
             CheckPickUpCount();
             // enable player/AP scripts
+
             
             
         }
         else if (!inProgress)
-        { 
+        {
             //disable player/AP scripts
+            Time.timeScale = 0.0f;
         }
 
         CheckPlayerInputs();
@@ -111,5 +114,21 @@ public class GameManager : MonoBehaviour {
             InitGame();
         if (Input.GetKeyDown(KeyCode.R) && inProgress)
             TaskCompleted();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!paused)
+            {
+                Time.timeScale = 0.0f;
+                paused = true;
+            }
+            else if (paused)
+            {
+                Time.timeScale = 1.0f;
+                paused = false;
+            }
+            //Display UI canvas
+            //Change text to "Paused"
+
+        }
     }
 }

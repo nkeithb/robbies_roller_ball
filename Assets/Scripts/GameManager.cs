@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance = null;
-    public float levelStartDelay = 2f;
+    public float levelStartDelay = 0f;
     public static int level = 1;
 
     private int pickUpCount;
@@ -16,30 +16,32 @@ public class GameManager : MonoBehaviour {
 	void Awake ()
     {
         CheckInstantiation();
-        FreezeGame();
         DontDestroyOnLoad(gameObject);
+        FreezeGame();
     }
 
     void InitGame()
     {
-        
-        FreezeGame();
         UserInterfaceController.instance.SetAndShowLevelText(level);
-        Invoke("UnPauseGame", levelStartDelay);
+        UserInterfaceController.instance.HideLevelImage();
+        UnFreezeGame();
+        inProgress = true;
+        
     }
 
     void Update()
     {
         if (inProgress)
-        {
+        {    
             CheckPickUpCount();              
         }
         CheckPlayerInputs();
+        
     }
 
     public void GameOver()
     {
-        PauseGame();
+        //PauseGame();
         UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
         Invoke("RestartGame", levelStartDelay);
     }    
@@ -51,7 +53,7 @@ public class GameManager : MonoBehaviour {
 
     public void RestartGame()
     {
-        PauseGame();
+        //PauseGame();
         level = 1;
         GoToLevel();
     }
@@ -81,11 +83,12 @@ public class GameManager : MonoBehaviour {
         UserInterfaceController.instance.SetAndShowLevelOverText("You collected all of the pieces!");
         level++;
         Invoke("GoToLevel", levelStartDelay);
+        
     }
 
     private void GoToLevel()
     {
-        SceneManager.LoadScene("MiniGameLvl" + level);
+        SceneManager.LoadScene("MiniGameLvl" + level);   
     }
 
     private void CheckPlayerInputs()
@@ -94,11 +97,11 @@ public class GameManager : MonoBehaviour {
             InitGame();
         if (Input.GetKeyDown(KeyCode.R) && inProgress)
             TaskCompleted();
-        if (Input.GetKeyDown(KeyCode.Escape))
-            AttemptPauseGame();
+        //if (Input.GetKeyDown(KeyCode.Escape))
+            //AttemptPauseGame();
     }
 
-    private void AttemptPauseGame()
+ /* private void AttemptPauseGame()
     {
         if(!paused)
         {
@@ -111,16 +114,16 @@ public class GameManager : MonoBehaviour {
     {
         FreezeGame();
         paused = true;
-        UserInterfaceController.instance.SetAndShowLevelText(level);
+        //UserInterfaceController.instance.SetAndShowLevelText(level);
     }
 
     private void UnPauseGame()
     {
         paused = false;
-        UserInterfaceController.instance.HideLevelImage();
+        //UserInterfaceController.instance.HideLevelImage();
         UnFreezeGame();
     }
-
+    */
     private void FreezeGame()
     {
         Time.timeScale = 0.0f;
@@ -128,6 +131,6 @@ public class GameManager : MonoBehaviour {
 
     private void UnFreezeGame()
     {
-        Time.timeScale = 1.0f;
+        Time.timeScale = 1f;
     }
 }

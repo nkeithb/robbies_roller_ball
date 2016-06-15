@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody rb;
     private static int count = 0;
-    private bool paused = false;
 
     //Sets base information for all Variables at the start of the run.
     void Start()

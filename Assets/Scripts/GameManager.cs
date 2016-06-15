@@ -98,10 +98,10 @@ public class GameManager : MonoBehaviour
     private void RunCheck()
     {
         levelImage = GameObject.Find("LevelImage");
-        if (levelImage.active)
-            FreezeGame();
-        if (!levelImage.active && !paused)
-            UnFreezeGame();
+        //if (levelImage.active)
+        //    FreezeGame();
+        //if (!levelImage.active && !paused)
+        //    UnFreezeGame();
     }
 
     private void CheckPlayerInputs()

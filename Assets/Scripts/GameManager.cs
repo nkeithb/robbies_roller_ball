@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour {
 
     void InitGame()
     {
-        inProgress = true;
+        
         FreezeGame();
         UserInterfaceController.instance.SetAndShowLevelText(level);
         Invoke("UnPauseGame", levelStartDelay);
@@ -118,7 +118,6 @@ public class GameManager : MonoBehaviour {
     {
         paused = false;
         UserInterfaceController.instance.HideLevelImage();
-
         UnFreezeGame();
     }
 

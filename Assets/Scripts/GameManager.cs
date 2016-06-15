@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     void InitGame()
     {
         inProgress = true;
-        UserInterfaceController.instance.SetAndShowLevelText(level);
+        UserInterfaceController.instance.SetAndShowLevelText("Level " + level);
         UserInterfaceController.instance.HideLevelImageDelay(levelStartDelay);
     }
 
@@ -108,24 +108,23 @@ public class GameManager : MonoBehaviour
     private void AttemptPauseGame()
     {
         if (!paused)
-        {
             PauseGame();
-        }
-        UnPauseGame();
+        else if (paused)
+            UnPauseGame();
     }
 
     private void PauseGame()
     {
-        FreezeGame();
         paused = true;
-        UserInterfaceController.instance.SetAndShowLevelText(level);
+        FreezeGame();
+        UserInterfaceController.instance.SetAndShowLevelText("Paused");
     }
 
     private void UnPauseGame()
     {
+        UnFreezeGame();
         paused = false;
         UserInterfaceController.instance.HideLevelImage();
-        UnFreezeGame();
     }
 
     private void FreezeGame()

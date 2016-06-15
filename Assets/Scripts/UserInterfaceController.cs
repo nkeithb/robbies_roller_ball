@@ -18,9 +18,9 @@ public class UserInterfaceController : MonoBehaviour {
         levelOverText = GameObject.Find("LevelOverText").GetComponent<Text>();
     }
 
-    public void SetAndShowLevelText(int level)
+    public void SetAndShowLevelText(string level)
     {
-        levelText.text = "Level " + level;
+        levelText.text = level;
         levelOverText.text = "";
         levelImage.SetActive(true);
     }

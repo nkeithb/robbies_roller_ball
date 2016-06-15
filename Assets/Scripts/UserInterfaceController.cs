@@ -9,13 +9,16 @@ public class UserInterfaceController : MonoBehaviour {
     private Text levelText;
     private Text levelOverText;
     private GameObject levelImage;
+    private GameObject pauseText;
 
     void Awake()
     {
         CheckInstantiation();
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
+        pauseText = GameObject.Find("PauseText");
         levelOverText = GameObject.Find("LevelOverText").GetComponent<Text>();
+        pauseText.SetActive(false);
     }
 
     public void SetAndShowLevelText(string level)
@@ -23,6 +26,16 @@ public class UserInterfaceController : MonoBehaviour {
         levelText.text = level;
         levelOverText.text = "";
         levelImage.SetActive(true);
+    }
+
+    public void ShowPauseText()
+    {
+        pauseText.SetActive(true);
+    }
+
+    public void HidePauseText()
+    {
+        pauseText.SetActive(false);
     }
 
     public void SetAndShowLevelOverText(string textToUse)

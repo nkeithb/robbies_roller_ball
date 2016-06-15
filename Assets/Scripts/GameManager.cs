@@ -117,14 +117,14 @@ public class GameManager : MonoBehaviour
     {
         paused = true;
         FreezeGame();
-        UserInterfaceController.instance.SetAndShowLevelText("Paused");
+        UserInterfaceController.instance.ShowPauseText();
     }
 
     private void UnPauseGame()
     {
         UnFreezeGame();
         paused = false;
-        UserInterfaceController.instance.HideLevelImage();
+        UserInterfaceController.instance.HidePauseText();
     }
 
     private void FreezeGame()

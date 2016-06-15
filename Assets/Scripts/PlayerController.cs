@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour {
     public AudioClip[] rampSounds;
     public AudioClip[] jumpSounds;
 
+    public static PlayerController instance = null;
+
     private Rigidbody rb;
     private static int count = 0;
     
@@ -24,6 +26,16 @@ public class PlayerController : MonoBehaviour {
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+    }
+
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+
+        DontDestroyOnLoad(gameObject);
     }
 
     void FixedUpdate()

@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private bool inProgress;
     private bool paused = false;
     private bool runThrough = true;
+    private GameObject levelImage;
 
     void Awake()
     {
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
             CheckPickUpCount();
         }
         CheckPlayerInputs();
+        RunCheck();
     }
 
     public void RestartLevel()
@@ -91,6 +93,15 @@ public class GameManager : MonoBehaviour
     private void GoToLevel()
     {
         SceneManager.LoadScene("MiniGameLvl" + level);
+    }
+
+    private void RunCheck()
+    {
+        levelImage = GameObject.Find("LevelImage");
+        if (levelImage.active)
+            FreezeGame();
+        if (!levelImage.active && !paused)
+            UnFreezeGame();
     }
 
     private void CheckPlayerInputs()

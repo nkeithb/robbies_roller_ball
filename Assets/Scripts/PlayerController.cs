@@ -19,11 +19,11 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody rb;
     private static int count = 0;
-
+    
     //Sets base information for all Variables at the start of the run.
     void Start()
     {
-        rb = GetComponent<Rigidbody>();        
+        rb = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
@@ -37,9 +37,9 @@ public class PlayerController : MonoBehaviour {
         switch (other.tag)
         {
             case "Pick Up":
+                CheckMass();
                 other.gameObject.SetActive(false);
                 SoundManager.instance.RandomizeSfx(pickUpSounds);
-                count++;
                 break;
             case "DontPickUp":
                 other.gameObject.SetActive(false);
@@ -47,8 +47,9 @@ public class PlayerController : MonoBehaviour {
                 count--;
                 break;
             case "AntiPlayer":
+                rb.mass -= 0.01f;
                 SoundManager.instance.PlaySingle(antiPlayerSound);
-                count--;
+                //count--;
                 break;
             case "Wall":
                 SoundManager.instance.PlaySingle(wallSound);
@@ -91,5 +92,13 @@ public class PlayerController : MonoBehaviour {
         float moveVertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
         rb.AddForce(movement* speed);
+    }
+
+    private void CheckMass()
+    {
+        if (rb.mass >= 1.5)
+            count++;
+        else if (rb.mass < 1.5)
+            rb.mass += 0.1f;
     }
 }

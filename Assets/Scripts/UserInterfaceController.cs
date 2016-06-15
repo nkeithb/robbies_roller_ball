@@ -14,10 +14,7 @@ public class UserInterfaceController : MonoBehaviour {
     void Awake()
     {
         CheckInstantiation();
-        levelImage = GameObject.Find("LevelImage");
-        levelText = GameObject.Find("LevelText").GetComponent<Text>();
-        pauseText = GameObject.Find("PauseText");
-        levelOverText = GameObject.Find("LevelOverText").GetComponent<Text>();
+        FindGameObjects();
         pauseText.SetActive(false);
     }
 
@@ -61,5 +58,13 @@ public class UserInterfaceController : MonoBehaviour {
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
+    }
+
+    private void FindGameObjects()
+    {
+        levelImage = GameObject.Find("LevelImage");
+        levelText = GameObject.Find("LevelText").GetComponent<Text>();
+        pauseText = GameObject.Find("PauseText");
+        levelOverText = GameObject.Find("LevelOverText").GetComponent<Text>();
     }
 }

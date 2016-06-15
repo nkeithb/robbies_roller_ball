@@ -15,9 +15,6 @@ public class UserInterfaceController : MonoBehaviour {
         CheckInstantiation();
         levelImage = GameObject.Find("LevelImage");
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
-        // trying to solve issue of some fonts rendering as black even when set to white
-        levelText.color = Color.white;
-            //GameObject.Find("LevelText").GetComponent<Text.Color>();
         levelOverText = GameObject.Find("LevelOverText").GetComponent<Text>();
     }
 

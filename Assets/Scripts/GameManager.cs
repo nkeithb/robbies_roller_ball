@@ -12,49 +12,51 @@ public class GameManager : MonoBehaviour {
     private int nextLevel;
     private bool inProgress;
     private bool paused = false;
-    private bool runThrough = true;
 
 	void Awake ()
     {
         CheckInstantiation();
+        FreezeGame();
         DontDestroyOnLoad(gameObject);
-        if (!runThrough)
-        {
-            InitGame();
-        }
-    }
-
-    private void OnLevelWasLoaded (int index)
-    {
-        InitGame();
     }
 
     void InitGame()
     {
         inProgress = true;
+        FreezeGame();
         UserInterfaceController.instance.SetAndShowLevelText(level);
-        UserInterfaceController.instance.HideLevelImageDelay(levelStartDelay);
+        Invoke("UnPauseGame", levelStartDelay);
     }
 
     void Update()
     {
         if (inProgress)
         {
-            Time.timeScale = 1.0f;
-            CheckPickUpCount();
-            // enable player/AP scripts
-
-            
-            
+            CheckPickUpCount();              
         }
-        else if (!inProgress)
-        {
-            //disable player/AP scripts
-            Time.timeScale = 0.0f;
-        }
-
         CheckPlayerInputs();
     }
+
+    public void GameOver()
+    {
+        PauseGame();
+        UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
+        Invoke("RestartGame", levelStartDelay);
+    }    
+
+    public void RestartLevel()
+    {
+        GoToLevel();
+    }
+
+    public void RestartGame()
+    {
+        PauseGame();
+        level = 1;
+        GoToLevel();
+    }
+
+    //Private Functions
 
     private void CheckInstantiation()
     {
@@ -64,7 +66,7 @@ public class GameManager : MonoBehaviour {
             Destroy(gameObject);
     }
 
-    void CheckPickUpCount()
+    private void CheckPickUpCount()
     {
         pickUpCount = GameObject.FindGameObjectsWithTag("Pick Up").Length;
         if (pickUpCount == 0)
@@ -73,21 +75,12 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    public void GameOver()
-    {
-        inProgress = false;
-        UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
-        Invoke("RestartGame", levelStartDelay);
-        inProgress = true;
-    }
-
     private void TaskCompleted()
     {
         inProgress = false;
         UserInterfaceController.instance.SetAndShowLevelOverText("You collected all of the pieces!");
         level++;
         Invoke("GoToLevel", levelStartDelay);
-        inProgress = true;
     }
 
     private void GoToLevel()
@@ -95,21 +88,8 @@ public class GameManager : MonoBehaviour {
         SceneManager.LoadScene("MiniGameLvl" + level);
     }
 
-    public void RestartLevel()
-    {
-        GoToLevel();
-    }
-
-    public void RestartGame()
-    {
-        level = 1;
-        GoToLevel();
-    }
-
     private void CheckPlayerInputs()
     {
-        //switch(Input.inputString)
-          //  case:
         if (Input.GetKeyDown(KeyCode.Return) && !inProgress && level == 1)
             InitGame();
         if (Input.GetKeyDown(KeyCode.R) && inProgress)
@@ -126,15 +106,29 @@ public class GameManager : MonoBehaviour {
         }
         UnPauseGame();
     }
+
     private void PauseGame()
     {
-        Time.timeScale = 0.0f;
-        paused = true;    
+        FreezeGame();
+        paused = true;
+        UserInterfaceController.instance.SetAndShowLevelText(level);
     }
 
     private void UnPauseGame()
     {
-        Time.timeScale = 1.0f;
         paused = false;
+        UserInterfaceController.instance.HideLevelImage();
+
+        UnFreezeGame();
+    }
+
+    private void FreezeGame()
+    {
+        Time.timeScale = 0.0f;
+    }
+
+    private void UnFreezeGame()
+    {
+        Time.timeScale = 1.0f;
     }
 }

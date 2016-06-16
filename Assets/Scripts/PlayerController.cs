@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour {
         {
             case "Pick Up":
                 //CheckMass();
-                count++;
+                count += 100;
                 other.gameObject.SetActive(false);
                 SoundManager.instance.RandomizeSfx(pickUpSounds);
                 break;

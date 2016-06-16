@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
             //FreezeGame();
             //player.active = false;
             antiPlayerParent.active = false;
-            rb.constraints = RigidbodyConstraints.FreezePosition;
+            rb.constraints = RigidbodyConstraints.FreezeAll;
         }
         if (!levelImage.active)
         {

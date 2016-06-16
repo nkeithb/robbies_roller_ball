@@ -29,9 +29,6 @@ public class Bouncer : MonoBehaviour {
         {
             rb.AddForce(new Vector3(0, force, 0));
             rb.ResetInertiaTensor();
-        }
-        //if (gameObject.transform.position.y < startPosY - 0.6f)
-        //    rb.position = startPos;
-        
+        }       
     }
 }

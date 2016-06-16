@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour {
             case "AntiPlayer":
                 //rb.mass -= 0.01f
                 SoundManager.instance.PlaySingle(antiPlayerSound);
-                count--;
+                CheckCount();
                 break;
             case "Wall":
                 SoundManager.instance.PlaySingle(wallSound);
@@ -118,6 +118,12 @@ public class PlayerController : MonoBehaviour {
     public void GoToSpawnPoint()
     {
         Teleport("Spawn Point");
+    }
+
+    private void CheckCount()
+    {
+        if (count > 0)
+            count--;
     }
 
     private void CheckMass()

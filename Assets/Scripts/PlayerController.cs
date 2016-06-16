@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour {
     public float jumpForce = 250.0f - 250.0f;
     public Text countText;
     public GameObject Button;
+    public float teleportDelay = 3.0f;
+    public bool recentlyTeleported;
 
     public AudioClip[] pickUpSounds;
     public AudioClip[] deathSounds;
@@ -15,7 +17,8 @@ public class PlayerController : MonoBehaviour {
     public AudioClip wallSound;
     public AudioClip obstacleSound;
     public AudioClip[] rampSounds;
-    public AudioClip[] jumpSounds;    
+    public AudioClip[] jumpSounds;
+    public AudioClip[] teleportSounds;
 
     public static PlayerController instance = null;
 
@@ -83,9 +86,11 @@ public class PlayerController : MonoBehaviour {
                 GameManager.instance.GameOver();
                 break;
         }
-        if(other.name.Contains("Teleporter"))
+        if (other.name.Contains("Teleporter") && recentlyTeleported == false)
         {
+            SoundManager.instance.RandomizeSfx(teleportSounds);
             Teleport(other.tag);
+            AddTeleportDelay();
         }
         UserInterfaceController.instance.SetAndShowCountText(count);
     }
@@ -107,7 +112,7 @@ public class PlayerController : MonoBehaviour {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
-        rb.AddForce(movement* speed);
+        rb.AddForce(movement * speed);
     }
 
     public void GoToSpawnPoint()
@@ -121,6 +126,17 @@ public class PlayerController : MonoBehaviour {
             rb.mass += 0.1f;
         else if (rb.mass < 0.02)
             rb.mass = 0.02f;
+    }
+
+    private void SetRecentlyTeleported()
+    {
+        recentlyTeleported = false;
+    }
+
+    private void AddTeleportDelay()
+    { 
+        recentlyTeleported = true;
+        Invoke("SetRecentlyTeleported", teleportDelay);
     }
 
     private void Teleport(string spawnTag)

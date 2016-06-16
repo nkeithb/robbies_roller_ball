@@ -3,20 +3,24 @@ using System.Collections;
 
 public class Teleporter : MonoBehaviour {
 
-    // This script is currently unused, however teleporter functionality may be able to be moved in to this class
-    // It could also be changed to accept a public GameObject in-editor as the destination to add functionality
+    /* - Will teleport to destination object on collision with player
+       - teleportDelay > 0 required to prevent looping
+       - Replace PlayerController.instance.recentlyTeleported with
+         location of your own recentlyTeleported bool. */
 
     public GameObject destination;
+    public bool soundEnabled = true;
     public float teleportDelay = 0.1f;
-    private bool recentlyTeleported = false;
+
     private Transform playerTransform;
     private Transform spawnPoint;
     private Rigidbody rigidBody;
 
     // Use this for initialization
-	void Start () {
-	
-	}
+	void Start ()
+    {
+        PlayerController.instance.recentlyTeleported = false;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -28,22 +32,28 @@ public class Teleporter : MonoBehaviour {
         // Here, 'Teleporter1' will hold tag 'Teleporter2' and vice versa, creating the teleport effect. 
         // Can be used multiple times, however the tag of the teleporter MUST match the name of the 
         // target teleporter.
-        if (other.name.Contains("Player") && recentlyTeleported == false)
+        if (other.name.Contains("Player") && PlayerController.instance.recentlyTeleported == false)
         {
-            SoundManager.instance.RandomizeSfx(PlayerController.instance.teleportSounds);
-            Teleport(destination.tag);
+            PlayTeleporterSound();
             AddTeleportDelay();
+            Teleport(destination.name);
         }
+    }
+
+    private void PlayTeleporterSound()
+    {
+        if (soundEnabled == true)
+            SoundManager.instance.RandomizeSfx(PlayerController.instance.teleportSounds);
     }
 
     private void SetRecentlyTeleported()
     {
-        recentlyTeleported = false;
+        PlayerController.instance.recentlyTeleported = false;
     }
 
     private void AddTeleportDelay()
     {
-        recentlyTeleported = true;
+        PlayerController.instance.recentlyTeleported = true;
         Invoke("SetRecentlyTeleported", teleportDelay);
     }
 

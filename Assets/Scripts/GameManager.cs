@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     private int nextLevel;
     private bool inProgress;
     private bool paused = false;
-    private bool runThrough = true;
     private GameObject levelImage;
 
     private Transform playerTransform;
@@ -24,12 +23,7 @@ public class GameManager : MonoBehaviour
     {
         CheckInstantiation();
         DontDestroyOnLoad(gameObject);
-        SetTransformValues();
         GoToSpawnPoint();
-        if (!runThrough)
-        {
-            InitGame();
-        }
     }
 
     void InitGame()
@@ -68,11 +62,14 @@ public class GameManager : MonoBehaviour
     {
         UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
         Invoke("RestartGame", levelStartDelay);
+        Invoke("GoToSpawnPoint", levelStartDelay);
     }
 
     private void GoToSpawnPoint()
     {
+        SetTransformValues();
         rigidBody.velocity = new Vector3(0, 0, 0);
+        rigidBody.ResetInertiaTensor();
         playerTransform.position = spawnPoint.position;
     }
 

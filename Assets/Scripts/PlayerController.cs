@@ -15,13 +15,14 @@ public class PlayerController : MonoBehaviour {
     public AudioClip wallSound;
     public AudioClip obstacleSound;
     public AudioClip[] rampSounds;
-    public AudioClip[] jumpSounds;
+    public AudioClip[] jumpSounds;    
 
     public static PlayerController instance = null;
 
     private Rigidbody rb;
     private static int count = 0;
-    
+    private UserInterfaceController userInterfaceController;
+
     //Sets base information for all Variables at the start of the run.
     void Start()
     {
@@ -78,12 +79,7 @@ public class PlayerController : MonoBehaviour {
                 GameManager.instance.GameOver();
                 break;
         }
-        SetCountText();
-    }
-
-    void SetCountText()
-    {
-        countText.text = "Score: " + count.ToString();
+        UserInterfaceController.instance.SetAndShowCountText(count);
     }
 
     // Checks for input from keyboard to determine user actions

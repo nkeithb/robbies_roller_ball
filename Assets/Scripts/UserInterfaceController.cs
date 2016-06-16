@@ -4,8 +4,9 @@ using UnityEngine.UI;
 
 public class UserInterfaceController : MonoBehaviour {
 
-    public static UserInterfaceController instance;
+    public static UserInterfaceController instance = null;
 
+    private Text countText;
     private Text levelText;
     private Text levelOverText;
     private GameObject levelImage;
@@ -18,13 +19,6 @@ public class UserInterfaceController : MonoBehaviour {
         pauseText.SetActive(false);
     }
 
-    public void SetAndShowLevelText(string level)
-    {
-        levelText.text = level;
-        levelOverText.text = "";
-        levelImage.SetActive(true);
-    }
-
     public void ShowPauseText()
     {
         pauseText.SetActive(true);
@@ -35,11 +29,23 @@ public class UserInterfaceController : MonoBehaviour {
         pauseText.SetActive(false);
     }
 
+    public void SetAndShowLevelText(string level)
+    {
+        levelText.text = level;
+        levelOverText.text = "";
+        levelImage.SetActive(true);
+    }   
+
     public void SetAndShowLevelOverText(string textToUse)
     {
         levelText.text = "";
         levelOverText.text = textToUse;
         levelImage.SetActive(true);
+    }
+
+    public void SetAndShowCountText(int count)
+    {
+        countText.text = "Score: " + count.ToString();
     }
 
     public void HideLevelImage()
@@ -51,6 +57,8 @@ public class UserInterfaceController : MonoBehaviour {
     {
         Invoke("HideLevelImage", timeDelay);
     }
+
+    //private methods
 
     private void CheckInstantiation()
     {
@@ -66,5 +74,6 @@ public class UserInterfaceController : MonoBehaviour {
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         pauseText = GameObject.Find("PauseText");
         levelOverText = GameObject.Find("LevelOverText").GetComponent<Text>();
+        countText = GameObject.Find("Count Text").GetComponent<Text>();
     }
 }

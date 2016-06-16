@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     private int nextLevel;
     private bool inProgress;
     private bool paused = false;
-    private bool runThrough = true;
+    private bool runThrough = false;
     private GameObject levelImage;
 
     private Transform playerTransform;

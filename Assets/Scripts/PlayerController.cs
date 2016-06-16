@@ -81,9 +81,7 @@ public class PlayerController : MonoBehaviour {
                 SoundManager.instance.RandomizeSfx(rampSounds);
                 break;
             case "DeathZone":
-                SoundManager.instance.RandomizeSfx(deathSounds);
-                count = 0;
-                GameManager.instance.GameOver();
+                DeathCheck();
                 break;
         }
         if (other.name.Contains("Teleporter") && recentlyTeleported == false)
@@ -98,7 +96,7 @@ public class PlayerController : MonoBehaviour {
     // Checks for input from keyboard to determine user actions
     void CheckPlayerInputs()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && GameManager.instance.rb.constraints == RigidbodyConstraints.None)
         {
             rb.AddForce(new Vector3(0.0f, jumpForce, 0.0f));
             SoundManager.instance.RandomizeSfx(jumpSounds);
@@ -118,6 +116,16 @@ public class PlayerController : MonoBehaviour {
     public void GoToSpawnPoint()
     {
         Teleport("Spawn Point");
+    }
+
+    private void DeathCheck()
+    {
+        if (GameManager.instance.rb.constraints == RigidbodyConstraints.None)
+        {
+            SoundManager.instance.RandomizeSfx(deathSounds);
+            count = 0;
+            GameManager.instance.GameOver();
+        }
     }
 
     private void CheckCount()
@@ -153,7 +161,7 @@ public class PlayerController : MonoBehaviour {
         playerTransform.position = spawnPoint.position;
     }    
 
-    private void SetTransformValues(string spawnTag)
+    internal void SetTransformValues(string spawnTag)
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         spawnPoint = GameObject.Find(spawnTag).transform;

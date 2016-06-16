@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private GameObject levelImage;
     private GameObject antiPlayerParent;
     private GameObject player;
+    internal Rigidbody rb;
 
   
 
@@ -106,17 +107,21 @@ public class GameManager : MonoBehaviour
 
     private void RunCheck()
     {
+        rb = player.GetComponent<Rigidbody>();
         if (levelImage.active)
         {
             //FreezeGame();
+            //player.active = false;
             antiPlayerParent.active = false;
-            player.active = false;
+            rb.constraints = RigidbodyConstraints.FreezePosition;
         }
         if (!levelImage.active)
         {
             //UnFreezeGame();
+            //player.active = true;
             antiPlayerParent.active = true;
-            player.active = true;
+            rb.constraints = RigidbodyConstraints.None;
+
         }
     }
 

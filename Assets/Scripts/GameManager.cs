@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private bool inProgress;
     private bool paused = false;
     private GameObject levelImage;
+    private GameObject antiPlayerParent;
 
   
 
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
         CheckInstantiation();
         DontDestroyOnLoad(gameObject);
         PlayerController.instance.GoToSpawnPoint();
+        FindActiveObjects();
     }
 
     void InitGame()
@@ -39,12 +41,14 @@ public class GameManager : MonoBehaviour
             CheckPickUpCount();
         }
         CheckPlayerInputs();
+        RunCheck();
     }
 
     public void RestartLevel()
     {
         GoToLevel();
         PlayerController.instance.GoToSpawnPoint();
+        FindActiveObjects();
     }
 
     public void RestartGame()
@@ -52,17 +56,20 @@ public class GameManager : MonoBehaviour
         level = 1;
         GoToLevel();
         PlayerController.instance.GoToSpawnPoint();
+        FindActiveObjects();
     }
 
     public void GameOver()
     {
         UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
         Invoke("RestartGame", levelStartDelay);
+        FindActiveObjects();
     }
 
     private void OnLevelWasLoaded(int index)
     {
         InitGame();
+        FindActiveObjects();
     }
 
     private void CheckInstantiation()
@@ -98,11 +105,12 @@ public class GameManager : MonoBehaviour
 
     private void RunCheck()
     {
-        levelImage = GameObject.Find("LevelImage");
-        //if (levelImage.active)
-        //    FreezeGame();
-        //if (!levelImage.active && !paused)
-        //    UnFreezeGame();
+        if (levelImage.active)
+            //FreezeGame();
+            antiPlayerParent.active = false;
+        if (!levelImage.active && !paused)
+            //UnFreezeGame();
+            antiPlayerParent.active = true;
     }
 
     private void CheckPlayerInputs()
@@ -115,6 +123,12 @@ public class GameManager : MonoBehaviour
             TaskCompleted();
         if (Input.GetKeyDown(KeyCode.Escape))
             AttemptPauseGame();
+    }
+
+    private void FindActiveObjects()
+    {
+        levelImage = GameObject.Find("LevelImage");
+        antiPlayerParent = GameObject.Find("AntiPlayers");
     }
 
     private void AttemptPauseGame()

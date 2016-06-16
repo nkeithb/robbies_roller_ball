@@ -16,9 +16,8 @@ public class UserInterfaceController : MonoBehaviour {
     {
         CheckInstantiation();
         FindGameObjects();
-        pauseText.SetActive(false);
+       
     }
-
     public void ShowPauseText()
     {
         pauseText.SetActive(true);
@@ -31,6 +30,7 @@ public class UserInterfaceController : MonoBehaviour {
 
     public void SetAndShowLevelText(string level)
     {
+        HidePauseText();
         levelText.text = level;
         levelOverText.text = "";
         levelImage.SetActive(true);
@@ -38,6 +38,7 @@ public class UserInterfaceController : MonoBehaviour {
 
     public void SetAndShowLevelOverText(string textToUse)
     {
+        HidePauseText();
         levelText.text = "";
         levelOverText.text = textToUse;
         levelImage.SetActive(true);

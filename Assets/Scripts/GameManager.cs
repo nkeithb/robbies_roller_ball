@@ -16,10 +16,14 @@ public class GameManager : MonoBehaviour
     private bool runThrough = true;
     private GameObject levelImage;
 
+    private Transform playerTransform;
+    private Transform spawnPoint;
+
     void Awake()
     {
         CheckInstantiation();
         DontDestroyOnLoad(gameObject);
+        GoToSpawnPoint();
         if (!runThrough)
         {
             InitGame();
@@ -52,12 +56,21 @@ public class GameManager : MonoBehaviour
     {
         level = 1;
         GoToLevel();
+        GoToSpawnPoint();
     }
 
     public void GameOver()
     {
         UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
         Invoke("RestartGame", levelStartDelay);
+    }
+
+    private void GoToSpawnPoint()
+    {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        spawnPoint = GameObject.FindGameObjectWithTag("Spawn Point").transform;
+
+        playerTransform.position = spawnPoint.position;
     }
 
     private void OnLevelWasLoaded(int index)
@@ -93,6 +106,7 @@ public class GameManager : MonoBehaviour
     private void GoToLevel()
     {
         SceneManager.LoadScene("MiniGameLvl" + level);
+        // Go to 
     }
 
     private void RunCheck()

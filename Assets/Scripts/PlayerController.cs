@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour {
     public Text countText;
     public GameObject Button;
     public float teleportDelay = 3.0f;
-    public bool recentlyTeleported;
 
     public AudioClip[] pickUpSounds;
     public AudioClip[] deathSounds;
@@ -28,6 +27,9 @@ public class PlayerController : MonoBehaviour {
     private Transform playerTransform;
     private Transform spawnPoint;
     private Rigidbody rigidBody;
+    private int scoreMultiplier = 1;
+    private bool powerUp = false;
+    internal bool recentlyTeleported;
 
     //Sets base information for all Variables at the start of the run.
     void Start()
@@ -57,14 +59,16 @@ public class PlayerController : MonoBehaviour {
         {
             case "Pick Up":
                 //CheckMass();
-                count += 10;
+                count += 10 * scoreMultiplier;
                 other.gameObject.SetActive(false);
                 SoundManager.instance.RandomizeSfx(pickUpSounds);
                 break;
             case "DontPickUp":
                 other.gameObject.SetActive(false);
                 SoundManager.instance.PlaySingle(dontPickUpSound);
-                count += 50;
+                count += 50 * scoreMultiplier;
+                PowerUp();
+                Invoke("ResetScoreRatio", 10.0f);
                 break;
             case "AntiPlayer":
                 //rb.mass -= 0.01f
@@ -82,6 +86,10 @@ public class PlayerController : MonoBehaviour {
                 break;
             case "DeathZone":
                 DeathCheck();
+                break;
+            case "Hammer":
+                rb.AddForce(new Vector3(20000.0f, 0.0f, 20000.0f));
+                Invoke("DeathCheck", 1.0f);
                 break;
         }
         if (other.name.Contains("Teleporter") && recentlyTeleported == false)
@@ -118,6 +126,21 @@ public class PlayerController : MonoBehaviour {
         Teleport("Spawn Point");
     }
 
+    private void ResetScoreRatio()
+    {
+        scoreMultiplier = 1;
+        powerUp = false;
+        UserInterfaceController.instance.HidePowerUpText();
+    }
+
+    private void PowerUp()
+    {
+        // Place power up for DPU object here
+        scoreMultiplier = 5;
+        UserInterfaceController.instance.ShowPowerUpText();
+        powerUp = true;
+    }
+
     private void DeathCheck()
     {
         if (GameManager.instance.rb.constraints == RigidbodyConstraints.None)
@@ -130,7 +153,7 @@ public class PlayerController : MonoBehaviour {
 
     private void CheckCount()
     {
-        if (count > 0)
+        if (count > 0 && powerUp == false)
             count--;
     }
 

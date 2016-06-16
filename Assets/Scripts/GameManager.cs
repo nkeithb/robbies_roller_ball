@@ -18,12 +18,13 @@ public class GameManager : MonoBehaviour
 
     private Transform playerTransform;
     private Transform spawnPoint;
+    private Rigidbody rigidBody;
 
     void Awake()
     {
         CheckInstantiation();
         DontDestroyOnLoad(gameObject);
-        GoToSpawnPoint();
+        ////GoToSpawnPoint();
         if (!runThrough)
         {
             InitGame();
@@ -44,19 +45,21 @@ public class GameManager : MonoBehaviour
             CheckPickUpCount();
         }
         CheckPlayerInputs();
-        RunCheck();
+        ////SetTransformValues();
+        //RunCheck();
     }
 
     public void RestartLevel()
     {
         GoToLevel();
+        ////GoToSpawnPoint();
     }
 
     public void RestartGame()
     {
         level = 1;
         GoToLevel();
-        GoToSpawnPoint();
+        ////GoToSpawnPoint();
     }
 
     public void GameOver()
@@ -67,10 +70,15 @@ public class GameManager : MonoBehaviour
 
     private void GoToSpawnPoint()
     {
+        rigidBody.velocity = new Vector3(0, 0, 0);
+        playerTransform.position = spawnPoint.position;
+    }
+
+    private void SetTransformValues()
+    {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         spawnPoint = GameObject.FindGameObjectWithTag("Spawn Point").transform;
-
-        playerTransform.position = spawnPoint.position;
+        rigidBody = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
     }
 
     private void OnLevelWasLoaded(int index)

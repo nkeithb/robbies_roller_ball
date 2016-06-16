@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     private bool paused = false;
     private GameObject levelImage;
     private GameObject antiPlayerParent;
+    private GameObject player;
 
   
 
@@ -106,11 +107,17 @@ public class GameManager : MonoBehaviour
     private void RunCheck()
     {
         if (levelImage.active)
+        {
             //FreezeGame();
             antiPlayerParent.active = false;
-        if (!levelImage.active && !paused)
+            player.active = false;
+        }
+        if (!levelImage.active)
+        {
             //UnFreezeGame();
             antiPlayerParent.active = true;
+            player.active = true;
+        }
     }
 
     private void CheckPlayerInputs()
@@ -129,6 +136,7 @@ public class GameManager : MonoBehaviour
     {
         levelImage = GameObject.Find("LevelImage");
         antiPlayerParent = GameObject.Find("AntiPlayers");
+        player = GameObject.Find("Player(Clone)");
     }
 
     private void AttemptPauseGame()

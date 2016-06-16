@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
     private void TaskCompleted()
     {
         inProgress = false;
-        UserInterfaceController.instance.SetAndShowLevelOverText("You collected all of the pieces!");
+        UserInterfaceController.instance.SetAndShowLevelOverText("Level Completed");
         level++;
         Invoke("GoToLevel", levelStartDelay);
     }

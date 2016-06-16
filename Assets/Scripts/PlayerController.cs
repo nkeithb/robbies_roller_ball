@@ -57,14 +57,14 @@ public class PlayerController : MonoBehaviour {
         {
             case "Pick Up":
                 //CheckMass();
-                count += 100;
+                count += 10;
                 other.gameObject.SetActive(false);
                 SoundManager.instance.RandomizeSfx(pickUpSounds);
                 break;
             case "DontPickUp":
                 other.gameObject.SetActive(false);
                 SoundManager.instance.PlaySingle(dontPickUpSound);
-                count--;
+                count += 50;
                 break;
             case "AntiPlayer":
                 //rb.mass -= 0.01f

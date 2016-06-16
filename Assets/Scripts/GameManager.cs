@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     {
         CheckInstantiation();
         DontDestroyOnLoad(gameObject);
-        ////GoToSpawnPoint();
+        GoToSpawnPoint();
         if (!runThrough)
         {
             InitGame();
@@ -45,21 +45,21 @@ public class GameManager : MonoBehaviour
             CheckPickUpCount();
         }
         CheckPlayerInputs();
-        ////SetTransformValues();
+        SetTransformValues();
         //RunCheck();
     }
 
     public void RestartLevel()
     {
         GoToLevel();
-        ////GoToSpawnPoint();
+        GoToSpawnPoint();
     }
 
     public void RestartGame()
     {
         level = 1;
         GoToLevel();
-        ////GoToSpawnPoint();
+        GoToSpawnPoint();
     }
 
     public void GameOver()

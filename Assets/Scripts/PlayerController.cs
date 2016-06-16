@@ -53,7 +53,8 @@ public class PlayerController : MonoBehaviour {
         switch (other.tag)
         {
             case "Pick Up":
-                CheckMass();
+                //CheckMass();
+                count++;
                 other.gameObject.SetActive(false);
                 SoundManager.instance.RandomizeSfx(pickUpSounds);
                 break;
@@ -63,9 +64,9 @@ public class PlayerController : MonoBehaviour {
                 count--;
                 break;
             case "AntiPlayer":
-                rb.mass -= 0.01f;
+                //rb.mass -= 0.01f
                 SoundManager.instance.PlaySingle(antiPlayerSound);
-                //count--;
+                count--;
                 break;
             case "Wall":
                 SoundManager.instance.PlaySingle(wallSound);
@@ -116,10 +117,10 @@ public class PlayerController : MonoBehaviour {
 
     private void CheckMass()
     {
-        if (rb.mass >= 1.5)
-            count++;
-        else if (rb.mass < 1.5)
+        if (rb.mass < 1.0)
             rb.mass += 0.1f;
+        else if (rb.mass < 0.02)
+            rb.mass = 0.02f;
     }
 
     private void Teleport(string spawnTag)

@@ -15,15 +15,13 @@ public class GameManager : MonoBehaviour
     private bool paused = false;
     private GameObject levelImage;
 
-    private Transform playerTransform;
-    private Transform spawnPoint;
-    private Rigidbody rigidBody;
+  
 
     void Awake()
     {
         CheckInstantiation();
         DontDestroyOnLoad(gameObject);
-        GoToSpawnPoint();
+        PlayerController.instance.GoToSpawnPoint();
     }
 
     void InitGame()
@@ -31,7 +29,7 @@ public class GameManager : MonoBehaviour
         inProgress = true;
         UserInterfaceController.instance.SetAndShowLevelText("Level " + level);
         UserInterfaceController.instance.HideLevelImageDelay(levelStartDelay);
-        GoToSpawnPoint();
+        PlayerController.instance.GoToSpawnPoint();
     }
 
     void Update()
@@ -41,43 +39,25 @@ public class GameManager : MonoBehaviour
             CheckPickUpCount();
         }
         CheckPlayerInputs();
-        SetTransformValues();
-        //RunCheck();
     }
 
     public void RestartLevel()
     {
         GoToLevel();
-        GoToSpawnPoint();
+        PlayerController.instance.GoToSpawnPoint();
     }
 
     public void RestartGame()
     {
         level = 1;
         GoToLevel();
-        GoToSpawnPoint();
+        PlayerController.instance.GoToSpawnPoint();
     }
 
     public void GameOver()
     {
         UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
         Invoke("RestartGame", levelStartDelay);
-        Invoke("GoToSpawnPoint", levelStartDelay);
-    }
-
-    private void GoToSpawnPoint()
-    {
-        SetTransformValues();
-        rigidBody.velocity = new Vector3(0, 0, 0);
-        rigidBody.ResetInertiaTensor();
-        playerTransform.position = spawnPoint.position;
-    }
-
-    private void SetTransformValues()
-    {
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        spawnPoint = GameObject.FindGameObjectWithTag("Spawn Point").transform;
-        rigidBody = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
     }
 
     private void OnLevelWasLoaded(int index)

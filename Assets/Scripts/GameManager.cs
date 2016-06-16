@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     private int nextLevel;
     private bool inProgress;
     private bool paused = false;
-    private bool runThrough = false;
+    private bool runThrough = true;
     private GameObject levelImage;
 
     private Transform playerTransform;

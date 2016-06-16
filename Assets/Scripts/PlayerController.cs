@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody rb;
     private static int count = 0;
     private UserInterfaceController userInterfaceController;
+    private Transform playerTransform;
+    private Transform spawnPoint;
+    private Rigidbody rigidBody;
 
     //Sets base information for all Variables at the start of the run.
     void Start()
@@ -79,6 +82,10 @@ public class PlayerController : MonoBehaviour {
                 GameManager.instance.GameOver();
                 break;
         }
+        if(other.name.Contains("Teleporter"))
+        {
+            Teleport(other.tag);
+        }
         UserInterfaceController.instance.SetAndShowCountText(count);
     }
 
@@ -102,11 +109,31 @@ public class PlayerController : MonoBehaviour {
         rb.AddForce(movement* speed);
     }
 
+    public void GoToSpawnPoint()
+    {
+        Teleport("Spawn Point");
+    }
+
     private void CheckMass()
     {
         if (rb.mass >= 1.5)
             count++;
         else if (rb.mass < 1.5)
             rb.mass += 0.1f;
+    }
+
+    private void Teleport(string spawnTag)
+    {
+        SetTransformValues(spawnTag);
+        rigidBody.velocity = new Vector3(0, 0, 0);
+        rigidBody.ResetInertiaTensor();
+        playerTransform.position = spawnPoint.position;
+    }    
+
+    private void SetTransformValues(string spawnTag)
+    {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        spawnPoint = GameObject.Find(spawnTag).transform;
+        rigidBody = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
     }
 }

@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     {
         CheckInstantiation();
         DontDestroyOnLoad(gameObject);
+        SetTransformValues();
         GoToSpawnPoint();
         if (!runThrough)
         {
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
         inProgress = true;
         UserInterfaceController.instance.SetAndShowLevelText("Level " + level);
         UserInterfaceController.instance.HideLevelImageDelay(levelStartDelay);
+        GoToSpawnPoint();
     }
 
     void Update()

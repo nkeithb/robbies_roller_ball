@@ -3,19 +3,17 @@ using System.Collections;
 
 public class Bouncer : MonoBehaviour {
 
+    [Tooltip("Bounce force")]
     public float force = 90.0f;
-    public float height = 0.2f;
+    [Tooltip("Minimum distance from starting position to trigger a bounce")]
+    public float threshold = 0.2f;
 
-    private Rigidbody rb;
     private Vector3 startPos;
     private float startPosY;
 
     void Start ()
     {
-        startPos = gameObject.transform.position;
-        startPosY = startPos.y;
-        rb = gameObject.GetComponent<Rigidbody>();
-        BounceUp();
+        startPosY = transform.position.y;
     }
 	
 	void FixedUpdate ()
@@ -25,13 +23,15 @@ public class Bouncer : MonoBehaviour {
 
     private void BounceUp ()
     {
-        if (gameObject.transform.position.y <= startPosY + height)
+        if (transform.position.y <= startPosY + threshold)
         {
-            rb.AddForce(new Vector3(0, force, 0));
-            rb.ResetInertiaTensor();
+            GetComponent<Rigidbody>().AddForce(new Vector3(0, force, 0));
+            GetComponent<Rigidbody>().ResetInertiaTensor();
         }
-        //if (gameObject.transform.position.y < startPosY - 0.6f)
-        //    rb.position = startPos;
-        
+        if (transform.position.y < startPosY - 0.05f)
+        {
+            GetComponent<Rigidbody>().AddForce(new Vector3(0, force * 2, 0));
+            GetComponent<Rigidbody>().ResetInertiaTensor();
+        }
     }
 }

@@ -4,11 +4,12 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
     public float speed;
-    public float jumpForce = 250.0f - 250.0f;
+    public float jumpForce = 700.0f;
+    public float jumpCooldown = 0.01f;
     public Text countText;
     public GameObject Button;
     public float teleportDelay = 3.0f;
-    public bool recentlyTeleported;
+ 
 
     public AudioClip[] pickUpSounds;
     public AudioClip[] deathSounds;
@@ -19,6 +20,8 @@ public class PlayerController : MonoBehaviour {
     public AudioClip[] rampSounds;
     public AudioClip[] jumpSounds;
     public AudioClip[] teleportSounds;
+    public AudioClip[] hammerSounds;
+    public AudioClip[] completionSounds;
 
     public static PlayerController instance = null;
 
@@ -28,6 +31,12 @@ public class PlayerController : MonoBehaviour {
     private Transform playerTransform;
     private Transform spawnPoint;
     private Rigidbody rigidBody;
+    private bool powerUp = false;
+    private TrailRenderer playerTrail;
+
+    internal bool recentlyJumped = false;
+    internal bool recentlyTeleported;
+    internal int scoreMultiplier = 1;
 
     //Sets base information for all Variables at the start of the run.
     void Start()
@@ -56,15 +65,21 @@ public class PlayerController : MonoBehaviour {
         switch (other.tag)
         {
             case "Pick Up":
-                //CheckMass();
-                count++;
+                count += 10 * scoreMultiplier;
+                other.gameObject.SetActive(false);
+                SoundManager.instance.RandomizeSfx(pickUpSounds);
+                break;
+            case "Pick Up High":
+                count += 20 * scoreMultiplier;
                 other.gameObject.SetActive(false);
                 SoundManager.instance.RandomizeSfx(pickUpSounds);
                 break;
             case "DontPickUp":
                 other.gameObject.SetActive(false);
                 SoundManager.instance.PlaySingle(dontPickUpSound);
-                count--;
+                count += 50 * scoreMultiplier;
+                PowerUp();
+                Invoke("ResetScoreRatio", 10.0f);
                 break;
             case "AntiPlayer":
                 //rb.mass -= 0.01f
@@ -81,9 +96,10 @@ public class PlayerController : MonoBehaviour {
                 SoundManager.instance.RandomizeSfx(rampSounds);
                 break;
             case "DeathZone":
-                SoundManager.instance.RandomizeSfx(deathSounds);
-                count = 0;
-                GameManager.instance.GameOver();
+                DeathCheck();
+                break;
+            case "Hammer":
+                HammerSmack();
                 break;
         }
         if (other.name.Contains("Teleporter") && recentlyTeleported == false)
@@ -98,11 +114,16 @@ public class PlayerController : MonoBehaviour {
     // Checks for input from keyboard to determine user actions
     void CheckPlayerInputs()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && GameManager.instance.rb.constraints == RigidbodyConstraints.None 
+            && recentlyJumped == false)
         {
+            recentlyJumped = true;
             rb.AddForce(new Vector3(0.0f, jumpForce, 0.0f));
             SoundManager.instance.RandomizeSfx(jumpSounds);
+            Invoke("SetRecentlyJumped", jumpCooldown);
         }
+        if (Input.GetKeyDown(KeyCode.M))
+            print(string.Format("Sign X : {0:0.00##}", GameManager.instance.inProgress));
 
 
         //else if (Input.GetKeyUp(KeyCode.Space))
@@ -120,9 +141,45 @@ public class PlayerController : MonoBehaviour {
         Teleport("Spawn Point");
     }
 
+    private void HammerSmack()
+    {
+        int signOne = (Random.Range(0, 2) * 2) - 1;
+        int signTwo = (Random.Range(0, 2) * 2) - 1;
+        float dirX = Random.Range(10000f, 25000f) * signOne;
+        float dirZ = Random.Range(10000f, 25000f) * signTwo;
+        rb.AddForce(new Vector3(dirX, 3000.0f, dirZ));
+        SoundManager.instance.RandomizeSfx(hammerSounds);
+        Invoke("DeathCheck", 1.0f);
+    }
+
+    private void ResetScoreRatio()
+    {
+        scoreMultiplier = 1;
+        powerUp = false;
+        UserInterfaceController.instance.HidePowerUpText();
+    }
+
+    private void PowerUp()
+    {
+        // Place power up for DPU object here
+        scoreMultiplier = 5;
+        UserInterfaceController.instance.ShowPowerUpText();
+        powerUp = true;
+    }
+
+    private void DeathCheck()
+    {
+        if (GameManager.instance.rb.constraints == RigidbodyConstraints.None)
+        {
+            SoundManager.instance.RandomizeSfx(deathSounds);
+            count = 0;
+            GameManager.instance.GameOver();
+        }
+    }
+
     private void CheckCount()
     {
-        if (count > 0)
+        if (count > 0 && powerUp == false)
             count--;
     }
 
@@ -139,6 +196,11 @@ public class PlayerController : MonoBehaviour {
         recentlyTeleported = false;
     }
 
+    private void SetRecentlyJumped()
+    {
+        recentlyJumped = false;
+    }
+
     private void AddTeleportDelay()
     { 
         recentlyTeleported = true;
@@ -151,11 +213,13 @@ public class PlayerController : MonoBehaviour {
         rigidBody.velocity = new Vector3(0, 0, 0);
         rigidBody.ResetInertiaTensor();
         playerTransform.position = spawnPoint.position;
+        playerTrail.Clear();
     }    
 
-    private void SetTransformValues(string spawnTag)
-    {
+    internal void SetTransformValues(string spawnTag)
+    {   
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        playerTrail = GameObject.FindGameObjectWithTag("Player").GetComponent<TrailRenderer>();
         spawnPoint = GameObject.Find(spawnTag).transform;
         rigidBody = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
     }

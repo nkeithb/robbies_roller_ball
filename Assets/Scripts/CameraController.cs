@@ -2,12 +2,13 @@
 using System.Collections;
 
 public class CameraController : MonoBehaviour {
-    private GameObject player;
-
+    [Tooltip("Set camera offset")]
     public Vector3 offset;
 
-	// Use this for initialization
-	void Start () {
+    private GameObject player;
+
+    // Use this for initialization
+    void Start () {
         player = GameObject.FindGameObjectWithTag("Player");
         offset = transform.position - player.transform.position;
 	}

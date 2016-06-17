@@ -8,13 +8,18 @@ public class Teleporter : MonoBehaviour {
        - Replace PlayerController.instance.recentlyTeleported with
          location of your own recentlyTeleported bool. */
 
+    [Tooltip("Destination GameObject")]
     public GameObject destination;
+    [Tooltip("Toggle teleporter sounds")]
     public bool soundEnabled = true;
+    [Tooltip("Time in seconds that teleportation is prevented after using this teleporter")]
     public float teleportDelay = 0.1f;
 
     private Transform playerTransform;
     private Transform spawnPoint;
     private Rigidbody rigidBody;
+    private GameObject player;
+    private TrailRenderer trail;
 
     // Use this for initialization
 	void Start ()
@@ -29,10 +34,10 @@ public class Teleporter : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        // Here, 'Teleporter1' will hold tag 'Teleporter2' and vice versa, creating the teleport effect. 
-        // Can be used multiple times, however the tag of the teleporter MUST match the name of the 
-        // target teleporter.
-        if (other.name.Contains("Player") && PlayerController.instance.recentlyTeleported == false)
+        // Player(Clone) will trigger the Teleport method, which always moves 
+        // the player to the destination GameObject.
+
+        if (other.name == "Player(Clone)" && PlayerController.instance.recentlyTeleported == false)
         {
             PlayTeleporterSound();
             AddTeleportDelay();
@@ -63,11 +68,14 @@ public class Teleporter : MonoBehaviour {
         playerTransform.position = spawnPoint.position;
         rigidBody.velocity = new Vector3(0, 0, 0);
         rigidBody.ResetInertiaTensor();
+        trail.Clear();
     }
 
     private void SetTransformValues(string spawnTag)
     {
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player");
+        trail = player.GetComponent<TrailRenderer>();
+        playerTransform = player.transform;
         spawnPoint = GameObject.Find(spawnTag).transform;
         rigidBody = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
     }

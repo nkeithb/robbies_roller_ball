@@ -11,12 +11,12 @@ public class GameManager : MonoBehaviour
 
     private int pickUpCount;
     private int nextLevel;
-    private bool inProgress;
+    internal bool inProgress = false;
     private bool paused = false;
     private GameObject levelImage;
     private GameObject antiPlayerParent;
-
-  
+    private GameObject player;
+    internal Rigidbody rb;
 
     void Awake()
     {
@@ -24,11 +24,13 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         PlayerController.instance.GoToSpawnPoint();
         FindActiveObjects();
+        rb = player.GetComponent<Rigidbody>();
     }
 
     void InitGame()
     {
         inProgress = true;
+        UserInterfaceController.instance.HidePowerUpText();
         UserInterfaceController.instance.SetAndShowLevelText("Level " + level);
         UserInterfaceController.instance.HideLevelImageDelay(levelStartDelay);
         PlayerController.instance.GoToSpawnPoint();
@@ -61,7 +63,8 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
+        UserInterfaceController.instance.HidePowerUpText();
+        UserInterfaceController.instance.SetAndShowLevelOverText("Game Over: YOU LOSE!");
         Invoke("RestartGame", levelStartDelay);
         FindActiveObjects();
     }
@@ -92,32 +95,43 @@ public class GameManager : MonoBehaviour
     private void TaskCompleted()
     {
         inProgress = false;
-        UserInterfaceController.instance.SetAndShowLevelOverText("You collected all of the pieces!");
+        UserInterfaceController.instance.SetAndShowLevelOverText("Level " + level + " Completed");
         level++;
+        SoundManager.instance.RandomizeSfx(PlayerController.instance.completionSounds);
         Invoke("GoToLevel", levelStartDelay);
     }
 
     private void GoToLevel()
     {
         SceneManager.LoadScene("MiniGameLvl" + level);
+        UserInterfaceController.instance.HidePowerUpText();
+        PlayerController.instance.scoreMultiplier = 1;
         // Go to 
     }
 
     private void RunCheck()
     {
-        if (levelImage.active)
-            //FreezeGame();
-            antiPlayerParent.active = false;
-        if (!levelImage.active && !paused)
-            //UnFreezeGame();
-            antiPlayerParent.active = true;
+        rb = player.GetComponent<Rigidbody>();
+        if (levelImage.activeSelf)
+        {
+            inProgress = false;
+            antiPlayerParent.SetActive(false);
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+        }
+        if (!levelImage.activeSelf)
+        {
+            inProgress = true;
+            antiPlayerParent.SetActive(true);
+            rb.constraints = RigidbodyConstraints.None;
+        }
     }
 
     private void CheckPlayerInputs()
     {
         //switch(Input.inputString)
         //  case:
-        if (Input.GetKeyDown(KeyCode.Return) && !inProgress && level == 1)
+        if (Input.GetKeyDown(KeyCode.Return) && level == 1 && !inProgress 
+            && UserInterfaceController.instance.levelOverText.text != "Game Over: YOU LOSE!")
             InitGame();
         if (Input.GetKeyDown(KeyCode.R) && inProgress)
             TaskCompleted();
@@ -129,6 +143,7 @@ public class GameManager : MonoBehaviour
     {
         levelImage = GameObject.Find("LevelImage");
         antiPlayerParent = GameObject.Find("AntiPlayers");
+        player = GameObject.Find("Player(Clone)");
     }
 
     private void AttemptPauseGame()

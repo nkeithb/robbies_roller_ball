@@ -8,7 +8,7 @@ public class UserInterfaceController : MonoBehaviour {
 
     private Text countText;
     private Text levelText;
-    private Text levelOverText;
+    internal Text levelOverText;
     private Text powerUpText;
     private GameObject levelImage;
     private GameObject pauseText;

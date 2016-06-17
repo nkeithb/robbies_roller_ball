@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour {
     private bool powerUp = false;
     private TrailRenderer playerTrail;
 
-    internal bool recentlyJumped;
+    internal bool recentlyJumped = false;
     internal bool recentlyTeleported;
     internal int scoreMultiplier = 1;
 
@@ -114,7 +114,8 @@ public class PlayerController : MonoBehaviour {
     // Checks for input from keyboard to determine user actions
     void CheckPlayerInputs()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && GameManager.instance.rb.constraints == RigidbodyConstraints.None && recentlyJumped == false)
+        if (Input.GetKeyDown(KeyCode.Space) && GameManager.instance.rb.constraints == RigidbodyConstraints.None 
+            && recentlyJumped == false)
         {
             recentlyJumped = true;
             rb.AddForce(new Vector3(0.0f, jumpForce, 0.0f));

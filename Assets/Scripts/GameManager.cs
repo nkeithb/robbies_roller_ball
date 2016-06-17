@@ -18,14 +18,13 @@ public class GameManager : MonoBehaviour
     private GameObject player;
     internal Rigidbody rb;
 
-  
-
     void Awake()
     {
         CheckInstantiation();
         DontDestroyOnLoad(gameObject);
         PlayerController.instance.GoToSpawnPoint();
         FindActiveObjects();
+        rb = player.GetComponent<Rigidbody>();
     }
 
     void InitGame()
@@ -96,9 +95,9 @@ public class GameManager : MonoBehaviour
     private void TaskCompleted()
     {
         inProgress = false;
-        UserInterfaceController.instance.SetAndShowLevelOverText("Level Completed");
-        SoundManager.instance.RandomizeSfx(PlayerController.instance.completionSounds);
+        UserInterfaceController.instance.SetAndShowLevelOverText("Level " + level + " Completed");
         level++;
+        SoundManager.instance.RandomizeSfx(PlayerController.instance.completionSounds);
         Invoke("GoToLevel", levelStartDelay);
     }
 
@@ -131,7 +130,8 @@ public class GameManager : MonoBehaviour
     {
         //switch(Input.inputString)
         //  case:
-        if (Input.GetKeyDown(KeyCode.Return) && level == 1 && !inProgress)
+        if (Input.GetKeyDown(KeyCode.Return) && level == 1 && !inProgress 
+            && UserInterfaceController.instance.levelOverText.text != "Game Over: YOU LOSE!")
             InitGame();
         if (Input.GetKeyDown(KeyCode.R) && inProgress)
             TaskCompleted();

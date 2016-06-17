@@ -3,8 +3,11 @@ using System.Collections;
 
 public class AnitPlayerController : MonoBehaviour {
 
+    [Tooltip("AntiPlayer will follow this target")]
     public Transform target;
+    [Tooltip("AntiPlayer movement speed")]
     public float moveSpeed = 4f;
+    [Tooltip("AntiPlayer rotation speed")]
     public float rotationSpeed = 3f;
     
     void Start()

@@ -112,14 +112,14 @@ public class GameManager : MonoBehaviour
     private void RunCheck()
     {
         rb = player.GetComponent<Rigidbody>();
-        if (levelImage.active)
+        if (levelImage.activeSelf)
         {
             //FreezeGame();
             //player.active = false;
             antiPlayerParent.SetActive(false);
             rb.constraints = RigidbodyConstraints.FreezeAll;
         }
-        if (!levelImage.active)
+        if (!levelImage.activeSelf)
         {
             //UnFreezeGame();
             //player.active = true;

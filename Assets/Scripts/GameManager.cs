@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         UserInterfaceController.instance.HidePowerUpText();
-        UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
+        UserInterfaceController.instance.SetAndShowLevelOverText("Game Over: YOU LOSE!");
         Invoke("RestartGame", levelStartDelay);
         FindActiveObjects();
     }

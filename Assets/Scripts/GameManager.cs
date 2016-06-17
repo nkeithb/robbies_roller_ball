@@ -157,6 +157,7 @@ public class GameManager : MonoBehaviour
     private void PauseGame()
     {
         paused = true;
+        AudioListener.pause = true;
         FreezeGame();
         UserInterfaceController.instance.ShowPauseText();
     }
@@ -164,6 +165,7 @@ public class GameManager : MonoBehaviour
     private void UnPauseGame()
     {
         UnFreezeGame();
+        AudioListener.pause = false;
         paused = false;
         UserInterfaceController.instance.HidePauseText();
     }

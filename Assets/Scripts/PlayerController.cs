@@ -121,13 +121,9 @@ public class PlayerController : MonoBehaviour {
             SoundManager.instance.RandomizeSfx(jumpSounds);
             Invoke("SetRecentlyJumped", jumpCooldown);
         }
-        if (Input.GetKeyDown(KeyCode.M))
-            print(string.Format("Sign X : {0:0.00##}", GameManager.instance.inProgress));
-
 
         //else if (Input.GetKeyUp(KeyCode.Space))
         //rb.AddForce(new Vector3(0.0f, -jumpForce, 0.0f));
-
 
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");

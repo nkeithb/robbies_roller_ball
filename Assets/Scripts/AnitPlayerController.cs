@@ -29,11 +29,12 @@ public class AnitPlayerController : MonoBehaviour {
            * moveSpeed * Time.deltaTime;
         }
     }
-        void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
             switch (other.tag)
             {
                 case "Hammer":
+                    // test if hit with this print(string.Format("hit detected"));
                     int signOne = (Random.Range(0, 2) * 2) - 1;
                     int signTwo = (Random.Range(0, 2) * 2) - 1;
                     float dirX = Random.Range(10000f, 25000f) * signOne;

@@ -24,9 +24,8 @@ public class PlayerController : MonoBehaviour {
     public AudioClip[] completionSounds;
 
     public static PlayerController instance = null;
-
-    private Rigidbody rb;
     private static int count = 0;
+    private Rigidbody rb;
     private UserInterfaceController userInterfaceController;
     private Transform playerTransform;
     private Transform spawnPoint;
@@ -141,6 +140,11 @@ public class PlayerController : MonoBehaviour {
         Teleport("Spawn Point");
     }
 
+    public void HammerAPScore()
+    {
+        count += 250 * (scoreMultiplier / 2);
+    }
+
     private void HammerSmack()
     {
         int signOne = (Random.Range(0, 2) * 2) - 1;
@@ -149,7 +153,7 @@ public class PlayerController : MonoBehaviour {
         float dirZ = Random.Range(10000f, 25000f) * signTwo;
         rb.AddForce(new Vector3(dirX, 3000.0f, dirZ));
         SoundManager.instance.RandomizeSfx(hammerSounds);
-        Invoke("DeathCheck", 1.0f);
+        Invoke("DeathCheck", 1.5f);
     }
 
     private void ResetScoreRatio()

@@ -4,10 +4,12 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
     public float speed;
-    public float jumpForce = 250.0f - 250.0f;
+    public float jumpForce = 700.0f;
+    public float jumpCooldown = 0.01f;
     public Text countText;
     public GameObject Button;
     public float teleportDelay = 3.0f;
+ 
 
     public AudioClip[] pickUpSounds;
     public AudioClip[] deathSounds;
@@ -19,6 +21,7 @@ public class PlayerController : MonoBehaviour {
     public AudioClip[] jumpSounds;
     public AudioClip[] teleportSounds;
     public AudioClip[] hammerSounds;
+    public AudioClip[] completionSounds;
 
     public static PlayerController instance = null;
 
@@ -30,6 +33,7 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody rigidBody;
     private bool powerUp = false;
 
+    internal bool recentlyJumped;
     internal bool recentlyTeleported;
     internal int scoreMultiplier = 1;
 
@@ -109,10 +113,12 @@ public class PlayerController : MonoBehaviour {
     // Checks for input from keyboard to determine user actions
     void CheckPlayerInputs()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && GameManager.instance.rb.constraints == RigidbodyConstraints.None)
+        if (Input.GetKeyDown(KeyCode.Space) && GameManager.instance.rb.constraints == RigidbodyConstraints.None && recentlyJumped == false)
         {
+            recentlyJumped = true;
             rb.AddForce(new Vector3(0.0f, jumpForce, 0.0f));
             SoundManager.instance.RandomizeSfx(jumpSounds);
+            Invoke("SetRecentlyJumped", jumpCooldown);
         }
 
 
@@ -184,6 +190,11 @@ public class PlayerController : MonoBehaviour {
     private void SetRecentlyTeleported()
     {
         recentlyTeleported = false;
+    }
+
+    private void SetRecentlyJumped()
+    {
+        recentlyJumped = false;
     }
 
     private void AddTeleportDelay()

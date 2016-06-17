@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour
     {
         inProgress = false;
         UserInterfaceController.instance.SetAndShowLevelOverText("Level Completed");
+        SoundManager.instance.RandomizeSfx(PlayerController.instance.completionSounds);
         level++;
         Invoke("GoToLevel", levelStartDelay);
     }

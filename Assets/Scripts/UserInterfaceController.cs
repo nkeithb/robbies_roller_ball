@@ -9,9 +9,9 @@ public class UserInterfaceController : MonoBehaviour {
     private Text countText;
     private Text levelText;
     private Text levelOverText;
+    private Text powerUpText;
     private GameObject levelImage;
     private GameObject pauseText;
-    private GameObject powerUpText;
 
     void Awake()
     {
@@ -31,12 +31,12 @@ public class UserInterfaceController : MonoBehaviour {
 
     public void ShowPowerUpText()
     {
-        powerUpText.SetActive(true);
+        powerUpText.text = "PowerUp Active! 5x Score!";
     }
 
     public void HidePowerUpText()
     {
-        powerUpText.SetActive(false);
+        powerUpText.text = "";
     }
 
     public void SetAndShowLevelText(string level)
@@ -85,9 +85,9 @@ public class UserInterfaceController : MonoBehaviour {
         levelText = GameObject.Find("LevelText").GetComponent<Text>();
         levelOverText = GameObject.Find("LevelOverText").GetComponent<Text>();
         countText = GameObject.Find("Count Text").GetComponent<Text>();
+        powerUpText = GameObject.Find("PowerUpText").GetComponent<Text>();
 
         levelImage = GameObject.Find("LevelImage");
         pauseText = GameObject.Find("PauseText");
-        powerUpText = GameObject.Find("PowerUpText");
     }
 }

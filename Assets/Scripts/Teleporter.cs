@@ -8,8 +8,11 @@ public class Teleporter : MonoBehaviour {
        - Replace PlayerController.instance.recentlyTeleported with
          location of your own recentlyTeleported bool. */
 
+    [Tooltip("Destination GameObject")]
     public GameObject destination;
+    [Tooltip("Toggle teleporter sounds")]
     public bool soundEnabled = true;
+    [Tooltip("Time in seconds that teleportation is prevented after using this teleporter")]
     public float teleportDelay = 0.1f;
 
     private Transform playerTransform;

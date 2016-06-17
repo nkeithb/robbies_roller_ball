@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     void InitGame()
     {
         inProgress = true;
+        UserInterfaceController.instance.HidePowerUpText();
         UserInterfaceController.instance.SetAndShowLevelText("Level " + level);
         UserInterfaceController.instance.HideLevelImageDelay(levelStartDelay);
         PlayerController.instance.GoToSpawnPoint();
@@ -63,6 +64,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        UserInterfaceController.instance.HidePowerUpText();
         UserInterfaceController.instance.SetAndShowLevelOverText("Game Over Bitch Nigga!");
         Invoke("RestartGame", levelStartDelay);
         FindActiveObjects();
@@ -102,6 +104,8 @@ public class GameManager : MonoBehaviour
     private void GoToLevel()
     {
         SceneManager.LoadScene("MiniGameLvl" + level);
+        UserInterfaceController.instance.HidePowerUpText();
+        PlayerController.instance.scoreMultiplier = 1;
         // Go to 
     }
 
@@ -112,14 +116,14 @@ public class GameManager : MonoBehaviour
         {
             //FreezeGame();
             //player.active = false;
-            antiPlayerParent.active = false;
+            antiPlayerParent.SetActive(false);
             rb.constraints = RigidbodyConstraints.FreezeAll;
         }
         if (!levelImage.active)
         {
             //UnFreezeGame();
             //player.active = true;
-            antiPlayerParent.active = true;
+            antiPlayerParent.SetActive(true);
             rb.constraints = RigidbodyConstraints.None;
 
         }

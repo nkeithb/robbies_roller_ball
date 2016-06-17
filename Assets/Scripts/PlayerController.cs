@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour {
     public AudioClip[] rampSounds;
     public AudioClip[] jumpSounds;
     public AudioClip[] teleportSounds;
+    public AudioClip[] hammerSounds;
 
     public static PlayerController instance = null;
 
@@ -27,9 +28,10 @@ public class PlayerController : MonoBehaviour {
     private Transform playerTransform;
     private Transform spawnPoint;
     private Rigidbody rigidBody;
-    private int scoreMultiplier = 1;
     private bool powerUp = false;
+
     internal bool recentlyTeleported;
+    internal int scoreMultiplier = 1;
 
     //Sets base information for all Variables at the start of the run.
     void Start()
@@ -88,8 +90,7 @@ public class PlayerController : MonoBehaviour {
                 DeathCheck();
                 break;
             case "Hammer":
-                rb.AddForce(new Vector3(20000.0f, 0.0f, 20000.0f));
-                Invoke("DeathCheck", 1.0f);
+                HammerSmack();
                 break;
         }
         if (other.name.Contains("Teleporter") && recentlyTeleported == false)
@@ -124,6 +125,17 @@ public class PlayerController : MonoBehaviour {
     public void GoToSpawnPoint()
     {
         Teleport("Spawn Point");
+    }
+
+    private void HammerSmack()
+    {
+        int signOne = (Random.Range(0, 2) * 2) - 1;
+        int signTwo = (Random.Range(0, 2) * 2) - 1;
+        float dirX = Random.Range(10000f, 25000f) * signOne;
+        float dirZ = Random.Range(10000f, 25000f) * signTwo;
+        rb.AddForce(new Vector3(dirX, 3000.0f, dirZ));
+        SoundManager.instance.RandomizeSfx(hammerSounds);
+        Invoke("DeathCheck", 1.0f);
     }
 
     private void ResetScoreRatio()

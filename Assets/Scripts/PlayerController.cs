@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour {
     private Transform spawnPoint;
     private Rigidbody rigidBody;
     private bool powerUp = false;
+    private TrailRenderer playerTrail;
 
     internal bool recentlyJumped;
     internal bool recentlyTeleported;
@@ -120,6 +121,8 @@ public class PlayerController : MonoBehaviour {
             SoundManager.instance.RandomizeSfx(jumpSounds);
             Invoke("SetRecentlyJumped", jumpCooldown);
         }
+        if (Input.GetKeyDown(KeyCode.M))
+            print(string.Format("Sign X : {0:0.00##}", GameManager.instance.inProgress));
 
 
         //else if (Input.GetKeyUp(KeyCode.Space))
@@ -209,11 +212,13 @@ public class PlayerController : MonoBehaviour {
         rigidBody.velocity = new Vector3(0, 0, 0);
         rigidBody.ResetInertiaTensor();
         playerTransform.position = spawnPoint.position;
+        playerTrail.Clear();
     }    
 
     internal void SetTransformValues(string spawnTag)
-    {
+    {   
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        playerTrail = GameObject.FindGameObjectWithTag("Player").GetComponent<TrailRenderer>();
         spawnPoint = GameObject.Find(spawnTag).transform;
         rigidBody = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
     }

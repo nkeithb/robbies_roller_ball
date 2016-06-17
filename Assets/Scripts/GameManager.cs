@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     private int pickUpCount;
     private int nextLevel;
-    private bool inProgress;
+    internal bool inProgress = false;
     private bool paused = false;
     private GameObject levelImage;
     private GameObject antiPlayerParent;
@@ -115,18 +115,15 @@ public class GameManager : MonoBehaviour
         rb = player.GetComponent<Rigidbody>();
         if (levelImage.activeSelf)
         {
-            //FreezeGame();
-            //player.active = false;
+            inProgress = false;
             antiPlayerParent.SetActive(false);
             rb.constraints = RigidbodyConstraints.FreezeAll;
         }
         if (!levelImage.activeSelf)
         {
-            //UnFreezeGame();
-            //player.active = true;
+            inProgress = true;
             antiPlayerParent.SetActive(true);
             rb.constraints = RigidbodyConstraints.None;
-
         }
     }
 
@@ -134,7 +131,7 @@ public class GameManager : MonoBehaviour
     {
         //switch(Input.inputString)
         //  case:
-        if (Input.GetKeyDown(KeyCode.Return) && !inProgress && level == 1)
+        if (Input.GetKeyDown(KeyCode.Return) && level == 1 && !inProgress)
             InitGame();
         if (Input.GetKeyDown(KeyCode.R) && inProgress)
             TaskCompleted();

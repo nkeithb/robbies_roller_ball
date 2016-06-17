@@ -8,14 +8,12 @@ public class Bouncer : MonoBehaviour {
     [Tooltip("Minimum distance from starting position to trigger a bounce")]
     public float threshold = 0.2f;
 
-    private Rigidbody rb;
     private Vector3 startPos;
     private float startPosY;
 
     void Start ()
     {
-        startPosY = gameObject.transform.position.y;
-        rb = gameObject.GetComponent<Rigidbody>();
+        startPosY = transform.position.y;
     }
 	
 	void FixedUpdate ()
@@ -25,15 +23,15 @@ public class Bouncer : MonoBehaviour {
 
     private void BounceUp ()
     {
-        if (gameObject.transform.position.y <= startPosY + threshold)
+        if (transform.position.y <= startPosY + threshold)
         {
-            rb.AddForce(new Vector3(0, force, 0));
-            rb.ResetInertiaTensor();
+            GetComponent<Rigidbody>().AddForce(new Vector3(0, force, 0));
+            GetComponent<Rigidbody>().ResetInertiaTensor();
         }
-        if (gameObject.transform.position.y < startPosY - 0.05f)
+        if (transform.position.y < startPosY - 0.05f)
         {
-            rb.AddForce(new Vector3(0, force * 2, 0));
-            rb.ResetInertiaTensor();
+            GetComponent<Rigidbody>().AddForce(new Vector3(0, force * 2, 0));
+            GetComponent<Rigidbody>().ResetInertiaTensor();
         }
     }
 }

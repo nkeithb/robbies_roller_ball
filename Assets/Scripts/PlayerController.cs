@@ -60,8 +60,12 @@ public class PlayerController : MonoBehaviour {
         switch (other.tag)
         {
             case "Pick Up":
-                //CheckMass();
                 count += 10 * scoreMultiplier;
+                other.gameObject.SetActive(false);
+                SoundManager.instance.RandomizeSfx(pickUpSounds);
+                break;
+            case "Pick Up High":
+                count += 20 * scoreMultiplier;
                 other.gameObject.SetActive(false);
                 SoundManager.instance.RandomizeSfx(pickUpSounds);
                 break;

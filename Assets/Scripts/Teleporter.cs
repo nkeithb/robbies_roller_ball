@@ -37,7 +37,7 @@ public class Teleporter : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         // Player(Clone) will trigger the Teleport method, which always moves 
-        // the player to the destination GameObject.
+        // the player to the destination GameObject, if teleport is not on cd.
 
         if (other.name == "Player(Clone)" && PlayerController.instance.recentlyTeleported == false)
         {

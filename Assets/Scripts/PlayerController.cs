@@ -138,7 +138,8 @@ public class PlayerController : MonoBehaviour {
 
     public void HammerAPScore()
     {
-        count += 250;
+        count += 100;
+        UserInterfaceController.instance.SetAndShowCountText(count);
     }
 
     private void HammerSmack()

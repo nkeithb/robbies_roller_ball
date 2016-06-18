@@ -14,6 +14,8 @@ public class Teleporter : MonoBehaviour {
     public bool soundEnabled = true;
     [Tooltip("Time in seconds that teleportation is prevented after using this teleporter")]
     public float teleportDelay = 0.1f;
+    [Tooltip("Sets velocity to 0 upon teleportation if true")]
+    public bool stopMotionAfterTeleport = true;
 
     private Transform playerTransform;
     private Transform spawnPoint;
@@ -66,9 +68,12 @@ public class Teleporter : MonoBehaviour {
     {
         SetTransformValues(spawnTag);
         playerTransform.position = spawnPoint.position;
-        rigidBody.velocity = new Vector3(0, 0, 0);
-        rigidBody.ResetInertiaTensor();
-        trail.Clear();
+        if (stopMotionAfterTeleport)
+        {
+            rigidBody.velocity = new Vector3(0, 0, 0);
+            rigidBody.ResetInertiaTensor();
+            trail.Clear();
+        }
     }
 
     private void SetTransformValues(string spawnTag)

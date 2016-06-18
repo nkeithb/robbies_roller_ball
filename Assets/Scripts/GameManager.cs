@@ -135,6 +135,8 @@ public class GameManager : MonoBehaviour
             InitGame();
         if (Input.GetKeyDown(KeyCode.R) && inProgress)
             TaskCompleted();
+        if (Input.GetKeyDown(KeyCode.Backspace))
+            SceneManager.LoadScene("Developers_Test_Zone");
         if (Input.GetKeyDown(KeyCode.Escape))
             AttemptPauseGame();
     }

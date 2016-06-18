@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     private GameObject levelImage;
     private GameObject antiPlayerParent;
     private GameObject player;
+    private GameObject[] antiPlayers;
     internal Rigidbody rb;
 
     void Awake()
@@ -116,12 +117,16 @@ public class GameManager : MonoBehaviour
         {
             inProgress = false;
             antiPlayerParent.SetActive(false);
+            //foreach (GameObject obj in antiPlayers)
+            //    obj.SetActive(false);
             rb.constraints = RigidbodyConstraints.FreezeAll;
         }
         if (!levelImage.activeSelf)
         {
             inProgress = true;
             antiPlayerParent.SetActive(true);
+            //foreach (GameObject obj in antiPlayers)
+            //    obj.SetActive(true);
             rb.constraints = RigidbodyConstraints.None;
         }
     }
@@ -145,6 +150,7 @@ public class GameManager : MonoBehaviour
     {
         levelImage = GameObject.Find("LevelImage");
         antiPlayerParent = GameObject.Find("AntiPlayers");
+        antiPlayers = GameObject.FindGameObjectsWithTag("AntiPlayer");
         player = GameObject.Find("Player(Clone)");
     }
 

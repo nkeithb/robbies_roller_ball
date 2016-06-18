@@ -154,7 +154,10 @@ public class PlayerController : MonoBehaviour {
         float dirZ = Random.Range(10000f, 25000f) * signTwo;
         rb.AddForce(new Vector3(dirX, 3000.0f, dirZ));
         SoundManager.instance.RandomizeSfx(hammerSounds);
+<<<<<<< HEAD
         Invoke("DeathCheck", 1.0f);
+=======
+>>>>>>> caa6dba872fec467d6ff2c214aa74a44438e4939
         //Automatic death after hammer hit
         //Invoke("DeathCheck", 1.5f);
     }

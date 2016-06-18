@@ -7,15 +7,18 @@ public class AntiPlayerSpawner : MonoBehaviour {
 
     [Tooltip("Number of AntiPlayers that will cause the spawner to cease spawning activities")]
     public int maximumAntiPlayers = 5;
+    [Tooltip("Time between enemy spawns (Set greater than zero to avoid collisions)")]
+    public float spawnRate = 3.0f;
     [Tooltip("AntiPlayer prefab to spawn")]
     public GameObject antiPlayer;
 
     private int antiPlayerNumber;
+    private bool spawned = true;
 
 	// Use this for initialization
 	void Start ()
     {
-	    
+        Invoke("ResetSpawnTimer", spawnRate);
 	}
 	
 	// Update is called once per frame
@@ -32,10 +35,24 @@ public class AntiPlayerSpawner : MonoBehaviour {
 
     private void SpawnIfDeficient()
     {
-        if (antiPlayerNumber < maximumAntiPlayers)
+        if (antiPlayerNumber < maximumAntiPlayers && spawned == false)
         {
-            Instantiate(antiPlayer, transform.position, transform.rotation);
+            spawned = true;
+            GameObject obj = Instantiate(antiPlayer, transform.position, transform.rotation) as GameObject;
+
+            //
+            obj.GetComponent<Collider>().enabled = false;
+            obj.GetComponent<Collider>().enabled = true;
+            //
+
+            Invoke("ResetSpawnTimer", spawnRate);
         }
+    }
+
+    private void ResetSpawnTimer()
+    {
+        if (spawned == true)
+            spawned = false;
     }
 
 

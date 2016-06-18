@@ -141,6 +141,14 @@ public class PlayerController : MonoBehaviour {
         Teleport("Spawn Point");
     }
 
+<<<<<<< HEAD
+=======
+    public void HammerAPScore()
+    {
+        count += 250;
+    }
+
+>>>>>>> 4b4bf8e4aac3e93ecb2f981d617122aa2d221d59
     private void HammerSmack()
     {
         int signOne = (Random.Range(0, 2) * 2) - 1;

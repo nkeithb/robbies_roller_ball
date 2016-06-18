@@ -30,8 +30,9 @@ public class Bouncer : MonoBehaviour {
         }
         if (transform.position.y < startPosY - 0.05f)
         {
-            GetComponent<Rigidbody>().AddForce(new Vector3(0, force * 2, 0));
             GetComponent<Rigidbody>().ResetInertiaTensor();
+            GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
+            GetComponent<Rigidbody>().AddForce(new Vector3(0, force * 1.1f, 0));
         }
     }
 }

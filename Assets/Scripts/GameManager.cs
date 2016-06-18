@@ -135,6 +135,8 @@ public class GameManager : MonoBehaviour
             InitGame();
         if (Input.GetKeyDown(KeyCode.R) && inProgress)
             TaskCompleted();
+        if (Input.GetKeyDown(KeyCode.Backspace))
+            SceneManager.LoadScene("Developers_Test_Zone");
         if (Input.GetKeyDown(KeyCode.Escape))
             AttemptPauseGame();
     }
@@ -157,6 +159,7 @@ public class GameManager : MonoBehaviour
     private void PauseGame()
     {
         paused = true;
+        AudioListener.pause = true;
         FreezeGame();
         UserInterfaceController.instance.ShowPauseText();
     }
@@ -164,6 +167,7 @@ public class GameManager : MonoBehaviour
     private void UnPauseGame()
     {
         UnFreezeGame();
+        AudioListener.pause = false;
         paused = false;
         UserInterfaceController.instance.HidePauseText();
     }

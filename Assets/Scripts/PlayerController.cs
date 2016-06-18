@@ -150,7 +150,8 @@ public class PlayerController : MonoBehaviour {
         float dirZ = Random.Range(10000f, 25000f) * signTwo;
         rb.AddForce(new Vector3(dirX, 3000.0f, dirZ));
         SoundManager.instance.RandomizeSfx(hammerSounds);
-        Invoke("DeathCheck", 1.5f);
+        //Automatic death after hammer hit
+        //Invoke("DeathCheck", 1.5f);
     }
 
     private void ResetScoreRatio()

@@ -30,7 +30,7 @@ public class AnitPlayerController : MonoBehaviour {
            * moveSpeed * Time.deltaTime;
         }
     }
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
             switch (other.tag)
             {

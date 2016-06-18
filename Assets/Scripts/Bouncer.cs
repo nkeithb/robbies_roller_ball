@@ -32,7 +32,7 @@ public class Bouncer : MonoBehaviour {
         {
             GetComponent<Rigidbody>().ResetInertiaTensor();
             GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
-            GetComponent<Rigidbody>().AddForce(new Vector3(0, force * Random.Range(-1f,1f), 0));
+            GetComponent<Rigidbody>().AddForce(new Vector3(0, force * Random.Range(-.5f,.5f), 0));
         }
     }
 }

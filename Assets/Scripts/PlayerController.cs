@@ -156,14 +156,15 @@ public class PlayerController : MonoBehaviour {
     }
     private void HammerSmack()
     {
+        //Return either 1 or -1
         int signOne = (Random.Range(0, 2) * 2) - 1;
         int signTwo = (Random.Range(0, 2) * 2) - 1;
+        //Multiply each sign by a random number between 10000 and 25000
         float dirX = Random.Range(10000f, 25000f) * signOne;
         float dirZ = Random.Range(10000f, 25000f) * signTwo;
+        //Add forces calculated above to the player on their respective axes
         rb.AddForce(new Vector3(dirX, 3000.0f, dirZ));
         SoundManager.instance.RandomizeSfx(hammerSounds);
-
-        Invoke("DeathCheck", 1.0f);
         //Automatic death after hammer hit
         //Invoke("DeathCheck", 1.5f);
     }

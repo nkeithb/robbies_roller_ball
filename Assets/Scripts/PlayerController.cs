@@ -138,7 +138,7 @@ public class PlayerController : MonoBehaviour {
 
     public void HammerAPScore()
     {
-        count += 250 * (scoreMultiplier / 2);
+        count += 250;
     }
 
     private void HammerSmack()

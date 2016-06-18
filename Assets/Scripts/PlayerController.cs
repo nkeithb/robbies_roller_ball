@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour {
     private Transform spawnPoint;
     private Rigidbody rigidBody;
     private bool powerUp = false;
+    private bool speedUp = false;
     private TrailRenderer playerTrail;
 
     internal bool recentlyJumped = false;
@@ -68,6 +69,13 @@ public class PlayerController : MonoBehaviour {
                 count += 10 * scoreMultiplier;
                 other.gameObject.SetActive(false);
                 SoundManager.instance.RandomizeSfx(pickUpSounds);
+                break;
+            case "Speed Pick Up":
+                count += 35 * scoreMultiplier;
+                other.gameObject.SetActive(false);
+                SoundManager.instance.RandomizeSfx(pickUpSounds);
+                SpeedUp();
+                Invoke("ResetSpeedRatio", 10.0f);
                 break;
             case "Pick Up High":
                 count += 20 * scoreMultiplier;
@@ -154,10 +162,8 @@ public class PlayerController : MonoBehaviour {
         float dirZ = Random.Range(10000f, 25000f) * signTwo;
         rb.AddForce(new Vector3(dirX, 3000.0f, dirZ));
         SoundManager.instance.RandomizeSfx(hammerSounds);
-<<<<<<< HEAD
+
         Invoke("DeathCheck", 1.0f);
-=======
->>>>>>> caa6dba872fec467d6ff2c214aa74a44438e4939
         //Automatic death after hammer hit
         //Invoke("DeathCheck", 1.5f);
     }
@@ -168,6 +174,12 @@ public class PlayerController : MonoBehaviour {
         powerUp = false;
         UserInterfaceController.instance.HidePowerUpText();
     }
+    private void ResetSpeedRatio()
+    {
+        speed = 15;
+        speedUp = false;
+        UserInterfaceController.instance.HideSpeedUpText();
+    }
 
     private void PowerUp()
     {
@@ -175,6 +187,13 @@ public class PlayerController : MonoBehaviour {
         scoreMultiplier = 5;
         UserInterfaceController.instance.ShowPowerUpText();
         powerUp = true;
+    }
+    private void SpeedUp()
+    {
+        // Place power up for DPU object here
+        speed = 30;
+        UserInterfaceController.instance.ShowSpeedUpText();
+        speedUp = true;
     }
 
     private void DeathCheck()

@@ -42,18 +42,15 @@ public class AnitPlayerController : MonoBehaviour {
                     float dirZ = Random.Range(10000f, 25000f) * signTwo;
                     GetComponent<Rigidbody>().AddForce(new Vector3(dirX, 3000.0f, dirZ));
                     SoundManager.instance.RandomizeSfx(PlayerController.instance.hammerSounds);
-<<<<<<< HEAD
 
                     PlayerController.instance.HammerAPScore(); 
                     PlayerController.instance.HammerAPScore();
                     Invoke("DestroyThisAntiPlayer", 3.0f);
-=======
                     PlayerController.instance.HammerAPScore();
                     Invoke("DestroyThisAntiPlayer", 3.0f);
                     break;
                 case "DeathZone":
                     DestroyThisAntiPlayer();
->>>>>>> caa6dba872fec467d6ff2c214aa74a44438e4939
                     break;
             }
         }

@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour {
     public AudioClip[] rampSounds;
     public AudioClip[] jumpSounds;
     public AudioClip[] teleportSounds;
-    public AudioClip[] hammerSoun  ds;
+    public AudioClip[] hammerSounds;
     public AudioClip[] completionSounds;
 
     public static PlayerController instance = null;

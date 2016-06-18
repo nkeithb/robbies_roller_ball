@@ -41,7 +41,7 @@ public class AnitPlayerController : MonoBehaviour {
                     float dirZ = Random.Range(10000f, 25000f) * signTwo;
                     GetComponent<Rigidbody>().AddForce(new Vector3(dirX, 3000.0f, dirZ));
                     SoundManager.instance.RandomizeSfx(PlayerController.instance.hammerSounds);
-                    PlayerController.instance.HammerAPScore(); ;
+                    PlayerController.instance.HammerAPScore(); 
                     break;
             }
         }

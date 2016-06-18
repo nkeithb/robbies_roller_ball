@@ -12,8 +12,8 @@ public class AnitPlayerController : MonoBehaviour {
     
     void Start()
     {
-        if (Application.loadedLevelName != "Developer_Test_Zone")
-            target = GameObject.FindGameObjectWithTag("Player").transform;
+        //if (Application.loadedLevelName != "Developer_Test_Zone.unity")
+        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     void Update()
@@ -30,7 +30,7 @@ public class AnitPlayerController : MonoBehaviour {
            * moveSpeed * Time.deltaTime;
         }
     }
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
             switch (other.tag)
             {
@@ -42,12 +42,11 @@ public class AnitPlayerController : MonoBehaviour {
                     float dirZ = Random.Range(10000f, 25000f) * signTwo;
                     GetComponent<Rigidbody>().AddForce(new Vector3(dirX, 3000.0f, dirZ));
                     SoundManager.instance.RandomizeSfx(PlayerController.instance.hammerSounds);
-<<<<<<< HEAD
-                    PlayerController.instance.HammerAPScore(); 
-=======
                     PlayerController.instance.HammerAPScore();
                     Invoke("DestroyThisAntiPlayer", 3.0f);
->>>>>>> 246b72021001455fd9cfa6a68aafbd1bd9ab1303
+                    break;
+                case "DeathZone":
+                    DestroyThisAntiPlayer();
                     break;
             }
         }

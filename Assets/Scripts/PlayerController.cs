@@ -130,13 +130,6 @@ public class PlayerController : MonoBehaviour {
             SoundManager.instance.RandomizeSfx(jumpSounds);
             Invoke("SetRecentlyJumped", jumpCooldown);
         }
-        if (Input.GetKeyDown(KeyCode.M))
-            print(string.Format("Sign X : {0:0.00##}", GameManager.instance.inProgress));
-
-
-        //else if (Input.GetKeyUp(KeyCode.Space))
-        //rb.AddForce(new Vector3(0.0f, -jumpForce, 0.0f));
-
 
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
@@ -165,7 +158,7 @@ public class PlayerController : MonoBehaviour {
         //Add forces calculated above to the player on their respective axes
         rb.AddForce(new Vector3(dirX, 3000.0f, dirZ));
         SoundManager.instance.RandomizeSfx(hammerSounds);
-        //Automatic death after hammer hit
+        //Automatic death after hammer hit, not needed if there is a large enough DeathPlane
         //Invoke("DeathCheck", 1.5f);
     }
 

@@ -36,7 +36,7 @@ public class UserInterfaceController : MonoBehaviour {
     }
     public void ShowSpeedUpText()
     {
-        powerUpText.text = "PowerUp Active! 2x Speed!";
+        speedUpText.text = "SpeedUp Active! 2x Speed!";
     }
     public void HidePowerUpText()
     {

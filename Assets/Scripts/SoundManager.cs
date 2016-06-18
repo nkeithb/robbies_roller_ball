@@ -18,7 +18,7 @@ using System.Collections;
 				Destroy (gameObject);
             			
 			DontDestroyOnLoad (gameObject);
-        AudioListener.volume = 0.15f;
+            AudioListener.volume = 0.15f;
 		}
 		
 		

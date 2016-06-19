@@ -35,11 +35,18 @@ public class AnitPlayerController : MonoBehaviour {
             switch (other.tag)
             {
                 case "Hammer":
-                    // test if hit with this print(string.Format("hit detected"));
+                // test if hit with this print(string.Format("hit detected"));
                     int signOne = (Random.Range(0, 2) * 2) - 1;
                     int signTwo = (Random.Range(0, 2) * 2) - 1;
+                    
                     float dirX = Random.Range(10000f, 25000f) * signOne;
                     float dirZ = Random.Range(10000f, 25000f) * signTwo;
+                    
+                    /*
+                    float dirX = Random.Range(0.0f, 25000f) * signOne;
+                    float dirZ = (25000f - dirX) * signTwo;
+                    */
+
                     GetComponent<Rigidbody>().AddForce(new Vector3(dirX, 3000.0f, dirZ));
                     SoundManager.instance.RandomizeSfx(PlayerController.instance.hammerSounds);
                     PlayerController.instance.HammerAPScore();

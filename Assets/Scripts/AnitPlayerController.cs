@@ -50,15 +50,15 @@ public class AnitPlayerController : MonoBehaviour {
                     GetComponent<Rigidbody>().AddForce(new Vector3(dirX, 3000.0f, dirZ));
                     SoundManager.instance.RandomizeSfx(PlayerController.instance.hammerSounds);
                     PlayerController.instance.HammerAPScore();
-                    Invoke("DestroyThisAntiPlayer", 3.0f);
+                    Destroy(gameObject, 3.0f);
                     break;
                 case "DeathZone":
-                    DestroyThisAntiPlayer();
+                    Destroy(gameObject);
                     break;
             }
         }
 
-        private void DestroyThisAntiPlayer()
+    private void DestroyThisAntiPlayer()
     {
         Destroy (gameObject);
     }

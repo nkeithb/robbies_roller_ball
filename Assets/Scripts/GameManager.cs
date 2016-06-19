@@ -138,12 +138,23 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return) && level == 1 && !inProgress 
             && UserInterfaceController.instance.levelOverText.text != "Game Over: YOU LOSE!")
             InitGame();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            AttemptPauseGame();
+        // For testing
         if (Input.GetKeyDown(KeyCode.R) && inProgress)
             TaskCompleted();
         if (Input.GetKeyDown(KeyCode.Backspace))
             SceneManager.LoadScene("Developers_Portal");
-        if (Input.GetKeyDown(KeyCode.Escape))
-            AttemptPauseGame();
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            Time.timeScale -= 0.1f;
+            print(string.Format("Sign X : {0:0.00##}", Time.timeScale));
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Time.timeScale += 0.1f;
+            print(string.Format("Sign X : {0:0.00##}", Time.timeScale));
+        }
     }
 
     private void FindActiveObjects()

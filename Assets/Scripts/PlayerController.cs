@@ -10,7 +10,6 @@ public class PlayerController : MonoBehaviour {
     public GameObject Button;
     public float teleportDelay = 3.0f;
  
-
     public AudioClip[] pickUpSounds;
     public AudioClip[] deathSounds;
     public AudioClip antiPlayerSound;

@@ -17,7 +17,7 @@ public class Bouncer : MonoBehaviour {
     void Start ()
     {
         startPosY = transform.position.y;
-        SetMultiplier();
+        //SetMultiplier();
     }
 	
 	void FixedUpdate ()
@@ -35,6 +35,7 @@ public class Bouncer : MonoBehaviour {
 
     private void BounceUp ()
     {
+        SetMultiplier();
         if (transform.position.y <= startPosY + threshold)
         {
             GetComponent<Rigidbody>().AddForce(new Vector3(0, force, 0));

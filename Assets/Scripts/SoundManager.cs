@@ -18,7 +18,8 @@ using System.Collections;
 				Destroy (gameObject);
             			
 			DontDestroyOnLoad (gameObject);
-            AudioListener.volume = 0.15f;
+            //use if audio too loud
+            AudioListener.volume = 1.0f;
 		}
 		
 		

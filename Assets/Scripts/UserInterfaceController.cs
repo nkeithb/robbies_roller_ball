@@ -22,7 +22,7 @@ public class UserInterfaceController : MonoBehaviour {
     }
     public void ShowPauseText()
     {
-        pauseText.SetActive(true);
+        //pauseText.SetActive(true);
     }
 
     public void HidePauseText()

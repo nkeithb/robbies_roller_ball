@@ -139,7 +139,7 @@ public class GameManager : MonoBehaviour
             && UserInterfaceController.instance.levelOverText.text != "Game Over: YOU LOSE!")
             InitGame();
         if (Input.GetKeyDown(KeyCode.Escape))
-            AttemptPauseGame();
+            //AttemptPauseGame();
         // For testing
         if (Input.GetKeyDown(KeyCode.R) && inProgress)
             TaskCompleted();
